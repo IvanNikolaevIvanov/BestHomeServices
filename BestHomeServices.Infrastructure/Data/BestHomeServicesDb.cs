@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BestHomeServices.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class BestHomeServicesDb : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BestHomeServicesDb(DbContextOptions<BestHomeServicesDb> options)
             : base(options)
         {
         }
