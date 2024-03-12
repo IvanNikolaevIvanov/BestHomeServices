@@ -1,4 +1,4 @@
-﻿using BestHomeServices.Data;
+﻿using BestHomeServices.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
