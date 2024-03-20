@@ -27,8 +27,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
-
-                //TO DO: Remove Some Of The Restrictions
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                
             })
                  .AddEntityFrameworkStores<BestHomeServicesDb>();
 
