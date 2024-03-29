@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace BestHomeServices.Infrastructure.Constants
+﻿namespace BestHomeServices.Infrastructure.Constants
 {
     public static class DataConstants
     {

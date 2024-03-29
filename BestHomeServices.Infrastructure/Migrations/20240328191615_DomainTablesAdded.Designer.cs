@@ -4,6 +4,7 @@ using BestHomeServices.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestHomeServices.Infrastructure.Migrations
 {
     [DbContext(typeof(BestHomeServicesDb))]
-    partial class BestHomeServicesDbModelSnapshot : ModelSnapshot
+    [Migration("20240328191615_DomainTablesAdded")]
+    partial class DomainTablesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasComment("Home Service Category");
                 });
@@ -73,7 +75,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasComment("Cities in which service is provided");
                 });
@@ -120,7 +122,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
 
                     b.HasComment("Client of the Best Home Service");
                 });
@@ -139,7 +141,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
 
                     b.HasComment("Projects of the company");
                 });
@@ -195,7 +197,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Specialists", (string)null);
+                    b.ToTable("Specialists");
 
                     b.HasComment("Home Specialist");
                 });
@@ -212,7 +214,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasIndex("CitiesId");
 
-                    b.ToTable("CategoryCity", (string)null);
+                    b.ToTable("CategoryCity");
                 });
 
             modelBuilder.Entity("CitySpecialist", b =>
@@ -227,7 +229,7 @@ namespace BestHomeServices.Infrastructure.Migrations
 
                     b.HasIndex("SpecialistsId");
 
-                    b.ToTable("CitySpecialist", (string)null);
+                    b.ToTable("CitySpecialist");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

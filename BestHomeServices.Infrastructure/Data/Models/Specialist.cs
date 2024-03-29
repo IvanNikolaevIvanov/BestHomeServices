@@ -48,5 +48,8 @@ namespace BestHomeServices.Infrastructure.Data.Models
 
         [Comment("List of specialist's projects")]
         public ICollection<Project> Projects { get; set; } = new List<Project>();
+
+        [Comment("A boolean stating if the specialist is available to be hired")]
+        public bool IsBusy { get; set; } = false;
     }
 }
