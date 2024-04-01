@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BestHomeServices.Infrastructure.Constants.DataConstants;
@@ -43,13 +44,26 @@ namespace BestHomeServices.Infrastructure.Data.Models
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
-        [Comment("The cities in which the specialist operates")]
-        public ICollection<City> Cities { get; set; } = new List<City>();
+        [Required]
+        [Comment("Specialist's city identifier.")]
+        public int CityId { get; set; }
+
+        [ForeignKey(nameof(CityId))]
+        [Comment("City where the specialist operates")]
+        public City City { get; set; } = null!;
 
         [Comment("List of specialist's projects")]
         public ICollection<Project> Projects { get; set; } = new List<Project>();
 
+        [Required]
         [Comment("A boolean stating if the specialist is available to be hired")]
         public bool IsBusy { get; set; } = false;
+
+        [Required]
+        [Comment("User's identifier")]
+        public string UserId { get; set; } = string.Empty;
+
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; } = null!;
     }
 }

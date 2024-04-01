@@ -14,9 +14,9 @@ public class BestHomeServicesDb : IdentityDbContext
 
     public DbSet<Category> Categories { get; set; } = null!;
 
-    public DbSet<Specialist> Specialists { get; set; } = null!;
-
     public DbSet<City> Cities { get; set; } = null!;
+
+    public DbSet<Specialist> Specialists { get; set; } = null!;
 
     public DbSet<Client> Clients { get; set; } = null!;
 
@@ -26,8 +26,10 @@ public class BestHomeServicesDb : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new CityConfiguration());
+        builder.ApplyConfiguration(new ClientConfiguration());
         builder.ApplyConfiguration(new SpecialistConfiguration());
         builder.ApplyConfiguration(new ProjectConfiguration());
 
