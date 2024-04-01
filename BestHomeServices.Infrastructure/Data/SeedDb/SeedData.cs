@@ -56,33 +56,6 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
             hasher.HashPassword(ClientUser, "client123");
         }
 
-        private void SeedCategories()
-        {
-            ElectricianCategory = new Category()
-            {
-                Id = 1,
-                Title = "Electrician",
-                Description = "Hire one of the most experienced electricians in your area.",
-                ImgUrl = "~/images/electrical.png"
-            };
-
-            PlumberCategory = new Category()
-            {
-                Id = 2,
-                Title = "Plumber",
-                Description = "Hire one of the most experienced plumbers in your area.",
-                ImgUrl = "~/images/plumber.png"
-            };
-
-            HandymanCategory = new Category()
-            {
-                Id = 3,
-                Title = "Handyman",
-                Description = "Hire one of the most experienced handymen in your area.",
-                ImgUrl = "~/images/handyman.png"
-            };
-        }
-
         private void SeedCities()
         {
             LarnacaCity = new City()
@@ -106,6 +79,38 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
 
             };
         }
+
+        private void SeedCategories()
+        {
+            ElectricianCategory = new Category()
+            {
+                Id = 1,
+                Title = "Electrician",
+                Description = "Hire one of the most experienced electricians in your area.",
+                ImgUrl = "~/images/electrical.png",
+                Cities = new List<City>() { LarnacaCity }
+            };
+
+
+
+            PlumberCategory = new Category()
+            {
+                Id = 2,
+                Title = "Plumber",
+                Description = "Hire one of the most experienced plumbers in your area.",
+                ImgUrl = "~/images/plumber.png"
+            };
+
+            HandymanCategory = new Category()
+            {
+                Id = 3,
+                Title = "Handyman",
+                Description = "Hire one of the most experienced handymen in your area.",
+                ImgUrl = "~/images/handyman.png"
+            };
+        }
+
+        
 
         private void SeedClient()
         {
