@@ -10,6 +10,13 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
         {
             var data = new SeedData();
 
+            builder.HasMany(cat => cat.Cities)
+                .WithOne()
+                .HasForeignKey(c => c.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
             builder.HasData(new Category[] { data.ElectricianCategory, data.PlumberCategory, data.HandymanCategory });
             
               

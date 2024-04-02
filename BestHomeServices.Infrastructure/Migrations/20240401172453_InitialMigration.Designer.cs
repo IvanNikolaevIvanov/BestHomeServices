@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestHomeServices.Infrastructure.Migrations
 {
     [DbContext(typeof(BestHomeServicesDb))]
-    [Migration("20240328191615_DomainTablesAdded")]
-    partial class DomainTablesAdded
+    [Migration("20240401172453_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,16 +56,36 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.ToTable("Categories");
 
                     b.HasComment("Home Service Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Hire one of the most experienced electricians in your area.",
+                            ImgUrl = "~/images/electrical.png",
+                            Title = "Electrician"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Hire one of the most experienced plumbers in your area.",
+                            ImgUrl = "~/images/plumber.png",
+                            Title = "Plumber"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Hire one of the most experienced handymen in your area.",
+                            ImgUrl = "~/images/handyman.png",
+                            Title = "Handyman"
+                        });
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.City", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasComment("City's identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,6 +98,23 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.ToTable("Cities");
 
                     b.HasComment("Cities in which service is provided");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Larnaca"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Pafos"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Limasol"
+                        });
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Client", b =>
@@ -125,6 +162,17 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.ToTable("Clients");
 
                     b.HasComment("Client of the Best Home Service");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "16 Pythagorou str",
+                            CityId = 1,
+                            Name = "Pesho Petrov",
+                            PhoneNumber = "0035799344556",
+                            UserId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e"
+                        });
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Project", b =>
@@ -144,6 +192,13 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.ToTable("Projects");
 
                     b.HasComment("Projects of the company");
+
+                    b.HasData(
+                        new
+                        {
+                            SpecialistId = 1,
+                            ClientId = 1
+                        });
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Specialist", b =>
@@ -158,6 +213,10 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasComment("Category Identifier");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int")
+                        .HasComment("Specialist's city identifier.");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -193,43 +252,37 @@ namespace BestHomeServices.Infrastructure.Migrations
                         .HasColumnType("nvarchar(15)")
                         .HasComment("Specialist's Phone Number");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("User's identifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Specialists");
 
                     b.HasComment("Home Specialist");
-                });
 
-            modelBuilder.Entity("CategoryCity", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CitiesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "CitiesId");
-
-                    b.HasIndex("CitiesId");
-
-                    b.ToTable("CategoryCity");
-                });
-
-            modelBuilder.Entity("CitySpecialist", b =>
-                {
-                    b.Property<int>("CitiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialistsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CitiesId", "SpecialistsId");
-
-                    b.HasIndex("SpecialistsId");
-
-                    b.ToTable("CitySpecialist");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            CityId = 1,
+                            Description = "This is one of the best electricians in the area.",
+                            FirstName = "Ivan",
+                            ImageUrl = "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=",
+                            IsBusy = false,
+                            LastName = "Ivanov",
+                            PhoneNumber = "0012233556",
+                            UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -347,6 +400,40 @@ namespace BestHomeServices.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9c44750a-18d1-45dc-8f6c-263770f3013b",
+                            Email = "client@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "client@mail.com",
+                            NormalizedUserName = "client@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGDXEHypLqWQ2LbULbnS3Uiu10rPS5Sx+2z+EUNLbPzplZJlaLTiUDHqC/RyxORrpw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ce611e65-fc26-4c67-9b89-0c19e22107bc",
+                            TwoFactorEnabled = false,
+                            UserName = "client@mail.com"
+                        },
+                        new
+                        {
+                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2836ef76-07fa-481a-b3cb-91cda684496c",
+                            Email = "specialist1@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "specialist1@mail.com",
+                            NormalizedUserName = "specialist1@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGq/nKWRuGx0JsO2Vf6RNugRSlsicYeCb8hRn5MexWjK1OSaM7JlJ3NSCj1ZsAqBvg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c0833ef2-fb16-4b4b-ab5b-17553865a33a",
+                            TwoFactorEnabled = false,
+                            UserName = "specialist1@mail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -434,6 +521,15 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.City", b =>
+                {
+                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.Category", null)
+                        .WithMany("Cities")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Client", b =>
                 {
                     b.HasOne("BestHomeServices.Infrastructure.Data.Models.City", "City")
@@ -477,40 +573,26 @@ namespace BestHomeServices.Infrastructure.Migrations
                     b.HasOne("BestHomeServices.Infrastructure.Data.Models.Category", "Category")
                         .WithMany("Specialists")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
 
-            modelBuilder.Entity("CategoryCity", b =>
-                {
-                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("City");
 
-                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.City", null)
-                        .WithMany()
-                        .HasForeignKey("CitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CitySpecialist", b =>
-                {
-                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.City", null)
-                        .WithMany()
-                        .HasForeignKey("CitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BestHomeServices.Infrastructure.Data.Models.Specialist", null)
-                        .WithMany()
-                        .HasForeignKey("SpecialistsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -566,6 +648,8 @@ namespace BestHomeServices.Infrastructure.Migrations
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Category", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("Specialists");
                 });
 

@@ -88,7 +88,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 Title = "Electrician",
                 Description = "Hire one of the most experienced electricians in your area.",
                 ImgUrl = "~/images/electrical.png",
-                Cities = new List<City>() { LarnacaCity }
+               
             };
 
 
