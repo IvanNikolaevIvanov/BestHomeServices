@@ -87,7 +87,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 Id = 1,
                 Title = "Electrician",
                 Description = "Hire one of the most experienced electricians in your area.",
-                ImgUrl = "~/images/electrical.png",
+                ImgUrl = "images/electrical.png",
                
             };
 
@@ -98,7 +98,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 Id = 2,
                 Title = "Plumber",
                 Description = "Hire one of the most experienced plumbers in your area.",
-                ImgUrl = "~/images/plumber.png"
+                ImgUrl = "images/plumber.png"
             };
 
             HandymanCategory = new Category()
@@ -106,7 +106,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 Id = 3,
                 Title = "Handyman",
                 Description = "Hire one of the most experienced handymen in your area.",
-                ImgUrl = "~/images/handyman.png"
+                ImgUrl = "images/handyman.png"
             };
         }
 
