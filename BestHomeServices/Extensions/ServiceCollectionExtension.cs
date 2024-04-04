@@ -1,4 +1,7 @@
-﻿using BestHomeServices.Infrastructure.Data;
+﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Services.Category;
+using BestHomeServices.Infrastructure.Data;
+using BestHomeServices.Infrastructure.Data.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<ICategoryService, CategoryService>();
+
             return services;
         }
 
@@ -16,6 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection
             var connectionString = config.GetConnectionString("DefaultConnection");
             services.AddDbContext<BestHomeServicesDb>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<IRepository, Repository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

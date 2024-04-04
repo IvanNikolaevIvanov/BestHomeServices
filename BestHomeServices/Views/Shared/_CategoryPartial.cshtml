@@ -1,0 +1,13 @@
+﻿@model CategoryViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Url.Content(Model.ImgUrl)" alt="Category Image" />
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+            <h6><b>@Model.Description</b></h6>
+            <a asp-area="" asp-controller="Category" asp-action="Hire" 
+            asp-route-id="@Model.Id" class="btn btn-success">Hire</a>
+        </div>
+    </div>
+</div>

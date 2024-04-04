@@ -1,4 +1,6 @@
-﻿using BestHomeServices.Models;
+﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Models.Home;
+using BestHomeServices.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +9,23 @@ namespace BestHomeServices.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICategoryService categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            ICategoryService _categoryService)
         {
             _logger = logger;
+            categoryService = _categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var categories = await categoryService.AllCategories();
+            var model = new AllCategoriesIndexServiceModel();
+            model.Categories = categories;
+
+            return View(model);
         }
 
 
