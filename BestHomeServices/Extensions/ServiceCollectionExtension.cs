@@ -1,5 +1,5 @@
 ﻿using BestHomeServices.Core.Contracts;
-using BestHomeServices.Core.Services.Category;
+using BestHomeServices.Core.Services;
 using BestHomeServices.Infrastructure.Data;
 using BestHomeServices.Infrastructure.Data.Common;
 using Microsoft.AspNetCore.Identity;

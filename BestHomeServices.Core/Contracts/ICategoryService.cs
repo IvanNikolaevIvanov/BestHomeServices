@@ -5,7 +5,9 @@ namespace BestHomeServices.Core.Contracts
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryViewModel>> AllCategories();
+        Task<IEnumerable<CategoryViewModel>> AllCategoriesAsync(
+            string? categoryTitle = null,
+            string? city = null);
         
     }
 }

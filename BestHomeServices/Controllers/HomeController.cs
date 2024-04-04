@@ -1,12 +1,13 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Models.Home;
 using BestHomeServices.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BestHomeServices.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ICategoryService categoryService;
@@ -19,13 +20,17 @@ namespace BestHomeServices.Controllers
             categoryService = _categoryService;
         }
 
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery]AllCategoriesIndexServiceModel query)
         {
-            var categories = await categoryService.AllCategories();
-            var model = new AllCategoriesIndexServiceModel();
-            model.Categories = categories;
+            var model = await categoryService.AllCategoriesAsync(
+                query.City,
+                query.CategoryTitle);
 
-            return View(model);
+            query.Categories = model;
+
+            return View(query);
         }
 
 
