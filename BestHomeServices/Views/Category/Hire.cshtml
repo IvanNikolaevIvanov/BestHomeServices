@@ -1,0 +1,61 @@
+﻿@model CategoryFormModel
+@{
+    ViewBag.Title = "Hire a specialist";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" style="width: 20rem;">/>
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>Description: <b>@Model.Description</b></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Edit" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Client.Name" class="form-label-add-edit">Your Name</label>
+                <input asp-for="@Model.Client.Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Client.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Client.Address" class="form-label-add-edit">Your Address</label>
+                <input asp-for="@Model.Client.Address" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Client.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Client.PhoneNumber" class="form-label-add-edit">Your phone number</label>
+                <textarea asp-for="@Model.Client.PhoneNumber" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="@Model.Client.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.SpecialistId" class="form-label-add-edit">Choose your specialist</label>
+                <select asp-for="@Model.SpecialistId" class="form-control" aria-required="true">
+                    @foreach (var specialist in Model.Specialists)
+                    {
+                        <option value="@specialist.Id">@specialist.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.SpecialistId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Hire" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

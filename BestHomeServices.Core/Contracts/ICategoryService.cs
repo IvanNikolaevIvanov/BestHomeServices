@@ -8,6 +8,10 @@ namespace BestHomeServices.Core.Contracts
         Task<IEnumerable<CategoryViewModel>> AllCategoriesAsync(
             string? categoryTitle = null,
             string? city = null);
-        
+
+        Task<bool> ExistsAsync(int id);
+
+        Task<CategoryFormModel> CategoryDetailsByIdAsync(int id);
+
     }
 }

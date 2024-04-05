@@ -1,5 +1,8 @@
 ﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Models.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace BestHomeServices.Controllers
 {
@@ -16,10 +19,29 @@ namespace BestHomeServices.Controllers
             categoryService = _categoryService;
         }
 
-
-        public async Task<IActionResult> Hire()
+        
+        [HttpGet]
+        public async Task<IActionResult> Hire(int id)
         {
-            return View();
+
+            if (await categoryService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await categoryService.CategoryDetailsByIdAsync(id);
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Hire(CategoryFormModel model, int id)
+        {
+
+            
+
+            return View(model);
         }
     }
 }
