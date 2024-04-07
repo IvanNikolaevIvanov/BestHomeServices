@@ -1,4 +1,5 @@
 ﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Enumerations;
 using BestHomeServices.Core.Models.Category;
 using BestHomeServices.Core.Models.City;
 using BestHomeServices.Core.Models.Home;
@@ -19,21 +20,22 @@ namespace BestHomeServices.Core.Services
         }
 
         public async Task<IEnumerable<CategoryViewModel>> AllCategoriesAsync(
-            string? categoryTitle = null,
-            string? city = null)
+            CityEnumeration cityEnumeration = CityEnumeration.All
+            , string? category = null
+            )
         {
             var categoriesToShow = repository.AllReadOnly<Infrastructure.Data.Models.Category>();
 
-            if (categoryTitle != null)
+            if (category != null && category != "All" )
             {
                 categoriesToShow = categoriesToShow
-                    .Where(c => c.Title == categoryTitle);
+                    .Where(c => c.Title == category);
             }
 
-            if (city != null)
+            if (cityEnumeration != CityEnumeration.All)
             {
                 categoriesToShow = categoriesToShow
-                    .Where(c => c.Cities.Any(c => c.Name == city));
+                    .Where(c => c.Cities.Any(c => c.Name == cityEnumeration.ToString()));
             }
 
             var categories = await categoriesToShow

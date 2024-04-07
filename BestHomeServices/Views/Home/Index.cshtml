@@ -4,6 +4,41 @@
    
 }
 
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <select asp-for="Category" class="form-control">
+                    <option value="">All</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Plumber">Plumber</option>
+                    <option value="Handyman">Handyman</option>                   
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="Cities"></label>
+                <select asp-for="Cities" class="form-control">
+                    <option value="0">All</option>
+                    <option value="1">Larnaca</option>
+                    <option value="2">Limasol</option>
+                    <option value="3">Pafos</option>
+                    <option value="4">Nicosia</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Show" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="row">
     @foreach (var category in Model.Categories)
     {

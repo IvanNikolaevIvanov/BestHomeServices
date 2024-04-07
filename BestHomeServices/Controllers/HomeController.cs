@@ -25,10 +25,12 @@ namespace BestHomeServices.Controllers
         public async Task<IActionResult> Index([FromQuery]AllCategoriesIndexServiceModel query)
         {
             var model = await categoryService.AllCategoriesAsync(
-                query.City,
-                query.CategoryTitle);
+                query.Cities,
+                query.Category);
 
             query.Categories = model;
+
+            //query.
 
             return View(query);
         }
