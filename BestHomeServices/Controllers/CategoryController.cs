@@ -35,13 +35,6 @@ namespace BestHomeServices.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Hire(CategoryFormModel model, int id)
-        {
-
-            
-
-            return View(model);
-        }
+        
     }
 }

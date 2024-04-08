@@ -1,0 +1,13 @@
+﻿@model SpecialistViewModel
+
+<div class="card mb-3">
+    <img class="card-img-top" src="@Model.ImageUrl" alt="Specialist Image" />
+    <div class="card-body text-center">    
+        <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text">Phone number: @Model.PhoneNumber</p>
+        <a asp-area="" asp-controller="Specialist" asp-action="Hire"
+           asp-route-id="@Model.Id" class="btn btn-success">Hire</a>
+    </div>
+</div>
+ 

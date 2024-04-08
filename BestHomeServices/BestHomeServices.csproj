@@ -24,4 +24,8 @@
     <ProjectReference Include="..\BestHomeServices.Core\BestHomeServices.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Specialist\" />
+  </ItemGroup>
+
 </Project>

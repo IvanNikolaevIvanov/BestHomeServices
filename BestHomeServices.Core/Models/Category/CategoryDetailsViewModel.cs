@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BestHomeServices.Core.Models.Category
 {
-    public class CategoryFormModel 
+    public class CategoryDetailsViewModel 
     {
         public string Title { get; set; } = string.Empty;
 

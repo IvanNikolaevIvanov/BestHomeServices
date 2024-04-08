@@ -26,7 +26,7 @@ namespace BestHomeServices.Core.Services
         {
             var categoriesToShow = repository.AllReadOnly<Infrastructure.Data.Models.Category>();
 
-            if (category != null && category != "All" )
+            if (category != null && category != "All")
             {
                 categoriesToShow = categoriesToShow
                     .Where(c => c.Title == category);
@@ -58,7 +58,7 @@ namespace BestHomeServices.Core.Services
                 .AnyAsync(c => c.Id == id);
         }
 
-        public async Task<CategoryFormModel> CategoryDetailsByIdAsync(int id)
+        public async Task<CategoryDetailsViewModel> CategoryDetailsByIdAsync(int id)
         {
             var categorySpecialists = await repository.AllReadOnly<Specialist>()
                 .Where(s => s.CategoryId == id)
@@ -73,7 +73,11 @@ namespace BestHomeServices.Core.Services
                .Select(s => new SpecialistViewModel()
                {
                    Id = s.Id,
-                   Name = s.FirstName
+                   FirstName = s.FirstName,
+                   LastName = s.LastName,
+                   Description = s.Description,
+                   ImageUrl = s.ImageUrl,
+                   PhoneNumber = s.PhoneNumber
                })
                .ToList();
             }
@@ -103,11 +107,11 @@ namespace BestHomeServices.Core.Services
             //    })
             //    .ToList();
             //}
-            
+
 
             var category = await repository.AllReadOnly<Category>()
                 .Where(c => c.Id == id)
-                .Select(c => new CategoryFormModel()
+                .Select(c => new CategoryDetailsViewModel()
                 {
                     Title = c.Title,
                     Description = c.Description,

@@ -30,8 +30,6 @@ namespace BestHomeServices.Controllers
 
             query.Categories = model;
 
-            //query.
-
             return View(query);
         }
 

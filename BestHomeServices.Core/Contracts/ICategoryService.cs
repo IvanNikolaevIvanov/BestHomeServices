@@ -13,7 +13,7 @@ namespace BestHomeServices.Core.Contracts
 
         Task<bool> ExistsAsync(int id);
 
-        Task<CategoryFormModel> CategoryDetailsByIdAsync(int id);
+        Task<CategoryDetailsViewModel> CategoryDetailsByIdAsync(int id);
 
     }
 }
