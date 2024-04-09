@@ -24,7 +24,7 @@ namespace BestHomeServices.Core.Services
             , string? category = null
             )
         {
-            var categoriesToShow = repository.AllReadOnly<Infrastructure.Data.Models.Category>();
+            var categoriesToShow = repository.AllReadOnly<Category>();
 
             if (category != null && category != "All")
             {

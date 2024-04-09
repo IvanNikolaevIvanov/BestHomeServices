@@ -1,0 +1,35 @@
+﻿@model CategoryDetailsViewModel
+@{
+    ViewBag.Title = "Hire a specialist";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:flex">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" /> 
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>Description: <b>@Model.Description</b></p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-4 mt-3 mb-3">
+        @foreach (var specialist in @Model.Specialists)
+        {
+            <partial name="_SpecialistPartial" model="@specialist" />
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

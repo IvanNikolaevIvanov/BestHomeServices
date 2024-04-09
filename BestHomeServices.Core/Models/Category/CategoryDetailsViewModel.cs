@@ -1,8 +1,5 @@
-﻿using BestHomeServices.Core.Models.City;
-using BestHomeServices.Core.Models.Client;
+﻿using BestHomeServices.Core.Models.Client;
 using BestHomeServices.Core.Models.Specialist;
-using BestHomeServices.Infrastructure.Data.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace BestHomeServices.Core.Models.Category
 {
@@ -20,7 +17,7 @@ namespace BestHomeServices.Core.Models.Category
 
         public IEnumerable<SpecialistViewModel> Specialists { get; set; } = new List<SpecialistViewModel>();
 
-        public ClientsServiceModel Client = null!;
+        //public ClientsServiceModel Client = null!;
         
 
     }

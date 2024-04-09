@@ -21,7 +21,7 @@ namespace BestHomeServices.Controllers
 
         
         [HttpGet]
-        public async Task<IActionResult> Hire(int id)
+        public async Task<IActionResult> SelectCategory(int id)
         {
 
             if (await categoryService.ExistsAsync(id) == false)

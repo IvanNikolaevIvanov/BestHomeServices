@@ -1,5 +1,6 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Models.Category;
+using BestHomeServices.Core.Models.Specialist;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestHomeServices.Controllers
@@ -20,10 +21,25 @@ namespace BestHomeServices.Controllers
             specialistService = _specialistService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Hire(CategoryDetailsViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> Hire(int specialistId)
         {
+            var model = new HireSpecialistFormModel() 
+            {
+                SpecialistId = specialistId
+            };
 
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Hire(HireSpecialistFormModel model)
+        {
+            if (await specialistService.SpecialistExistsAsync(model.SpecialistId) == false)
+            {
+                ModelState.AddModelError(nameof(model.SpecialistId), "Specialist doesn't exist");
+            }
 
 
             return View(model);
