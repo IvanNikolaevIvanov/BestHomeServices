@@ -1,14 +1,11 @@
-﻿using BestHomeServices.Core.Models.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BestHomeServices.Core.Models.Specialist;
 
 namespace BestHomeServices.Core.Contracts
 {
     public interface ISpecialistService
     {
-        Task HireSpecialistByIdAsync(int id);
+        Task<bool> SpecialistExistsAsync(int id);
+
+        Task<HireSpecialistFormModel> HireSpecialistByIdAsync(int id);
     }
 }

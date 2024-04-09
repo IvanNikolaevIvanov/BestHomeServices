@@ -13,6 +13,8 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISpecialistService, SpecialistService>();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             return services;
         }
