@@ -1,7 +1,9 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Models.Category;
 using BestHomeServices.Core.Models.Specialist;
+using BestHomeServices.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BestHomeServices.Controllers
 {
@@ -10,23 +12,31 @@ namespace BestHomeServices.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICategoryService categoryService;
         private readonly ISpecialistService specialistService;
+        private readonly IClientService clientService;
 
         public SpecialistController(
             ILogger<HomeController> logger,
             ICategoryService _categoryService,
-            ISpecialistService _specialistService)
+            ISpecialistService _specialistService,
+            IClientService _clientService)
         {
             _logger = logger;
             categoryService = _categoryService;
             specialistService = _specialistService;
+            clientService = _clientService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Hire(int specialistId)
+        public async Task<IActionResult> Hire(int id)
         {
-            var model = new HireSpecialistFormModel() 
+            if (await specialistService.SpecialistExistsAsync(id) == false)
             {
-                SpecialistId = specialistId
+                return BadRequest();
+            }
+
+            var model = new HireSpecialistFormModel()
+            {
+                SpecialistId = id
             };
 
             return View(model);
@@ -41,8 +51,20 @@ namespace BestHomeServices.Controllers
                 ModelState.AddModelError(nameof(model.SpecialistId), "Specialist doesn't exist");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            return View(model);
+            if (await clientService.ClientExistsAsync(User.Id()) == false)
+            {
+                await clientService.AddClientAsync(User.Id(), model.ClientName, model.ClientAddress, model.ClientCity, model.ClientPhoneNumber);
+            }
+            
+            await specialistService.HireSpecialistByIdAsync(model.SpecialistId, User.Id());
+
+           
+            return RedirectToAction(nameof(ClientController.All), "Client");
         }
     }
 }

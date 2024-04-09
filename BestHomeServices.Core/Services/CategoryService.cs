@@ -116,7 +116,7 @@ namespace BestHomeServices.Core.Services
                     Title = c.Title,
                     Description = c.Description,
                     ImgUrl = c.ImgUrl,
-                    Client = new Models.Client.ClientsServiceModel()
+                    //Client = new Models.Client.ClientsServiceModel()
 
                 })
                 .FirstAsync();

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Client's Information";
+    
 }
 
 
@@ -12,21 +13,27 @@
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form asp-action="Hire" method="post">
             <div class="mb-3">
-                <label asp-for="@Model.ClientName" class="form-label-add-edit">Your Name</label>
+                <label asp-for="@Model.ClientName" class="form-label-add-edit">Your Name:</label>
                 <input asp-for="@Model.ClientName" class="form-control" aria-required="true" />
                 <span asp-validation-for="@Model.ClientName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.ClientAddress" class="form-label-add-edit">Your Address</label>
+                <label asp-for="@Model.ClientCity" class="form-label-add-edit">Your City:</label>
+                <input asp-for="@Model.ClientCity" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.ClientCity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ClientAddress" class="form-label-add-edit">Your Address:</label>
                 <input asp-for="@Model.ClientAddress" class="form-control" aria-required="true" />
                 <span asp-validation-for="@Model.ClientAddress" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.ClientPhoneNumber" class="form-label-add-edit">Your phone number</label>
+                <label asp-for="@Model.ClientPhoneNumber" class="form-label-add-edit">Your phone number:</label>
                 <input asp-for="@Model.ClientPhoneNumber" class="form-control" aria-required="true" />
                 <span asp-validation-for="@Model.ClientPhoneNumber" class="text-danger"></span>
             </div>
            
+            <input asp-for="@Model.SpecialistId" class="visually-hidden"/> 
 
             <div class="mb-3">
                 <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Hire" />

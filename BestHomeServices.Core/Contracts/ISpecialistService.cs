@@ -6,6 +6,6 @@ namespace BestHomeServices.Core.Contracts
     {
         Task<bool> SpecialistExistsAsync(int id);
 
-        Task<HireSpecialistFormModel> HireSpecialistByIdAsync(int id);
+        Task HireSpecialistByIdAsync(int specialistId, string userId);
     }
 }

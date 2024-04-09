@@ -22,11 +22,36 @@ namespace BestHomeServices.Core.Services
                 .AnyAsync(s => s.Id == id);
         }
 
-        public Task<HireSpecialistFormModel> HireSpecialistByIdAsync(int id)
+
+        public async Task HireSpecialistByIdAsync(int specialistId, string userId)
         {
-            throw new NotImplementedException();
+            var specialist = await repository.AllReadOnly<Specialist>()
+                .FirstOrDefaultAsync(s => s.Id == specialistId);
+
+            var client = await repository.AllReadOnly<Client>()
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+
+            if (specialist != null && client != null)
+            {
+
+                var newProject = new Project()
+                {
+                    SpecialistId = specialist.Id,
+                    ClientId = client.Id
+                };
+
+                await repository.AddAsync(newProject);
+
+                specialist.IsBusy = true;
+                specialist.Projects.Add(newProject);
+
+                await repository.SaveChangesAsync();
+            }
+
+
         }
 
-       
+
     }
 }
