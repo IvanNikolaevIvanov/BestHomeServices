@@ -1,5 +1,6 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Models.Client;
+using BestHomeServices.Core.Models.Specialist;
 using BestHomeServices.Core.Services;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +12,16 @@ namespace BestHomeServices.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IClientService _clientService;
+        private readonly ISpecialistService specialistService;
 
         public ClientController(
             ILogger<HomeController> logger,
-            IClientService clientService)
+            IClientService clientService,
+            ISpecialistService _specialistService)
         {
             _logger = logger;
             _clientService = clientService;
+            specialistService = _specialistService;
         }
 
         [HttpGet]
@@ -56,15 +60,50 @@ namespace BestHomeServices.Controllers
             return RedirectToAction(nameof(ClientController.MyProfile), "Client");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveSpecialistFromClient(int specialistId)
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
         {
+
+            if (!await specialistService.SpecialistExistsAsync(id))
+            {
+                return BadRequest();
+            }
+
             if (!await _clientService.ClientExistsAsync(User.Id()))
             {
                 return BadRequest();
             }
 
-            
+            var specialist = await specialistService.GetSpecialistByIdAsync(id);
+
+            var model = new SpecialistViewModel()
+            {
+                Id = id,
+                FirstName = specialist.FirstName,
+                LastName = specialist.LastName,
+                ImageUrl = specialist.ImageUrl,
+                PhoneNumber = specialist.PhoneNumber
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Remove(SpecialistViewModel model)
+        {
+            if (!await specialistService.SpecialistExistsAsync(model.Id))
+            {
+                return BadRequest();
+            }
+
+            if (!await _clientService.ClientExistsAsync(User.Id()))
+            {
+                return BadRequest();
+            }
+
+            await _clientService.RemoveSpecialistFromClient(User.Id(), model.Id);
+
+            return RedirectToAction(nameof(MyProfile), "Client");
         }
     }
 }

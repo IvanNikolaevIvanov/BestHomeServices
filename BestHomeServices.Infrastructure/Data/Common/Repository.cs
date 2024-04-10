@@ -52,5 +52,10 @@ namespace BestHomeServices.Infrastructure.Data.Common
                 DbSet<T>().Remove(entity);
             }
         }
+
+        public async Task DeleteAsync<T>(T entity) where T : class
+        {
+             DbSet<T>().Remove(entity);
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace BestHomeServices.Core.Contracts
         Task<ShowClientInfoModel> GetClientInfoByUserId(string id);
 
         Task EditInfoAsync(string userId, ClientInfoForm model);
+
+        Task RemoveSpecialistFromClient(string userId, int id);
     }
 }

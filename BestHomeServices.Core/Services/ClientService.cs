@@ -101,5 +101,28 @@ namespace BestHomeServices.Core.Services
 
             return model;
         }
+
+        public async Task RemoveSpecialistFromClient(string userId, int specialistId)
+        {
+            var client = await repository.All<Client>()
+               .FirstAsync(c => c.UserId == userId);
+
+            var projectToDelete = await repository.AllReadOnly<Project>()
+                .FirstOrDefaultAsync(p => p.ClientId == client.Id && p.SpecialistId == specialistId);
+
+            if (projectToDelete != null)
+            {
+                await repository.DeleteAsync<Project>(projectToDelete);
+            }
+
+            var specialist = await repository.GetByIdAsync<Specialist>(specialistId);
+
+            if (specialist != null)
+            {
+                specialist.IsBusy = false;
+            }
+
+            await repository.SaveChangesAsync();
+        }
     }
 }

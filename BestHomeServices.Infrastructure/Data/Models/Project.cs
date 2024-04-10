@@ -7,6 +7,8 @@ namespace BestHomeServices.Infrastructure.Data.Models
     [Comment("Projects of the company")]
     public class Project
     {
+
+
         [Required]
         [Comment("Specialist Identifier")]
         public int SpecialistId { get; set; }

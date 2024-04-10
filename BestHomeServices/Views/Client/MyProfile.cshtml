@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "My Profile";
     var clientCity = await cityService.GetCityByIdAsync(Model.ClientInfo.CityId); 
+    
 }
 
 
@@ -27,6 +28,11 @@
         @foreach (var specialist in @Model.ClientSpecialists)
         {
             <partial name="_SpecialistPartial" model="@specialist" />
+
+            @specialist.Id
+
+            <a class="ml-2 btn btn-danger" asp-controller="Client" asp-action="Remove"
+               asp-route-id="@specialist.Id">Remove</a>
         }
     </div>
 </div>

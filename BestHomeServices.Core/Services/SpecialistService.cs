@@ -45,13 +45,17 @@ namespace BestHomeServices.Core.Services
 
                 specialist.IsBusy = true;
                 specialist.Projects.Add(newProject);
-                
+
                 await repository.SaveChangesAsync();
             }
 
 
         }
 
-
+        public async Task<Specialist> GetSpecialistByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Specialist>()
+                .FirstAsync(s => s.Id == id);
+        }
     }
 }

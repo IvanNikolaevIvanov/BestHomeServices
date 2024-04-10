@@ -1,4 +1,5 @@
 ﻿using BestHomeServices.Core.Models.Specialist;
+using BestHomeServices.Infrastructure.Data.Models;
 
 namespace BestHomeServices.Core.Contracts
 {
@@ -7,5 +8,7 @@ namespace BestHomeServices.Core.Contracts
         Task<bool> SpecialistExistsAsync(int id);
 
         Task HireSpecialistByIdAsync(int specialistId, string userId);
+
+        Task<Specialist> GetSpecialistByIdAsync(int id);
     }
 }
