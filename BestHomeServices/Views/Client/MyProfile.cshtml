@@ -1,0 +1,36 @@
+﻿@model ShowClientInfoModel
+@inject ICityService cityService
+@{
+    ViewBag.Title = "My Profile";
+    var clientCity = await cityService.GetCityByIdAsync(Model.ClientInfo.CityId); 
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:flex">
+    <div class="row">
+        <div class="card border-2">
+            <p>Name: @Model.ClientInfo.Name</p>
+            <p>City: @clientCity.Name</p>
+            <p>Address: @Model.ClientInfo.Address</p>
+            <p>Phone number: @Model.ClientInfo.PhoneNumber</p>
+            <a asp-area="" asp-controller="Client" asp-action="Edit" 
+            class="btn btn-outline-warning mb-3">Edit</a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-4 mt-3 mb-3">
+        @foreach (var specialist in @Model.ClientSpecialists)
+        {
+            <partial name="_SpecialistPartial" model="@specialist" />
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

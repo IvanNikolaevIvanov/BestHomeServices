@@ -1,4 +1,5 @@
 ﻿using BestHomeServices.Core.Models.City;
+using BestHomeServices.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace BestHomeServices.Core.Contracts
 {
     public interface ICityService
     {
-        Task<IEnumerable<CityViewModel>> GetAllCitiesAsync();
+        Task<ICollection<City>> GetAllCitiesAsync();
+
+        Task<City> GetCityByIdAsync(int id);
     }
 }

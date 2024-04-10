@@ -1,6 +1,19 @@
-﻿<ul class="navbar-nav flex-grow-1">
+﻿@inject IClientService clientService
+
+
+<ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
+    @if (this.User?.Identity?.IsAuthenticated ?? false)
+    {
+        @if (await clientService.ClientExistsAsync(User.Id()))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="MyProfile">My Profile</a>
+            </li>
+        }
+    }
+    
     
 </ul>

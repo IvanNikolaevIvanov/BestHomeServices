@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public bool IsBusy { get; set; }
+
         public string FirstName { get; set; } = string.Empty;
 
         public string LastName { get; set; } = string.Empty;

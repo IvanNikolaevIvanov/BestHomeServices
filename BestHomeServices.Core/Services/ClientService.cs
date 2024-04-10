@@ -1,17 +1,25 @@
 ﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Models.City;
+using BestHomeServices.Core.Models.Client;
+using BestHomeServices.Core.Models.Specialist;
 using BestHomeServices.Infrastructure.Data.Common;
 using BestHomeServices.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace BestHomeServices.Core.Services
 {
     public class ClientService : IClientService
     {
         private readonly IRepository repository;
+        private readonly ICityService cityService;
 
-        public ClientService(IRepository _repository)
+        public ClientService(
+            IRepository _repository,
+            ICityService _cityService)
         {
             repository = _repository;
+            cityService = _cityService;
         }
 
         public async Task AddClientAsync(string userId, string name, string address, string city, string phoneNumber)
@@ -25,7 +33,6 @@ namespace BestHomeServices.Core.Services
                 Name = name,
                 Address = address,
                 PhoneNumber = phoneNumber,
-                //City = currentCity,
                 CityId = currentCity.Id
             });
 
@@ -36,6 +43,63 @@ namespace BestHomeServices.Core.Services
         {
             return await repository.AllReadOnly<Client>()
                 .AnyAsync(c => c.UserId == id);
+        }
+
+        public async Task EditInfoAsync(string userId, ClientInfoForm model)
+        {
+            Client client = await repository.All<Client>()
+                .FirstAsync(client => client.UserId == userId);
+
+            var clientCity = await repository.AllReadOnly<City>()
+                .Where(c => c.Name == model.ClientCity)
+                .FirstOrDefaultAsync();
+
+            if (clientCity == null)
+            {
+                throw new ArgumentException("Service is not provided in this city");
+            }
+
+            client.Name = model.ClientName;
+            client.Address = model.ClientAddress;
+            client.CityId = clientCity.Id;
+            client.PhoneNumber = model.ClientPhoneNumber;
+            
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<ShowClientInfoModel> GetClientInfoByUserId(string id)
+        {
+            var model = new ShowClientInfoModel();
+
+            var client = await repository.AllReadOnly<Client>()
+                .FirstAsync(c => c.UserId == id);
+
+            model.ClientInfo = new ClientsServiceModel()
+            {
+                Name = client.Name,
+                Address = client.Address,
+                PhoneNumber = client.PhoneNumber,
+                CityId = client.CityId,
+                UserId = client.UserId
+            };
+
+            var clientSpecialists = await repository.AllReadOnly<Specialist>()
+                .Where(s => s.Projects.Any(p => p.ClientId == client.Id))
+                .Select(s => new SpecialistViewModel()
+                {
+                    Id = s.Id,
+                    IsBusy = s.IsBusy,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Description = s.Description,
+                    ImageUrl = s.ImageUrl,
+                    PhoneNumber = s.PhoneNumber
+                })
+                .ToListAsync();
+
+            model.ClientSpecialists = clientSpecialists;
+
+            return model;
         }
     }
 }

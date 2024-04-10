@@ -25,10 +25,10 @@ namespace BestHomeServices.Core.Services
 
         public async Task HireSpecialistByIdAsync(int specialistId, string userId)
         {
-            var specialist = await repository.AllReadOnly<Specialist>()
+            var specialist = await repository.All<Specialist>()
                 .FirstOrDefaultAsync(s => s.Id == specialistId);
 
-            var client = await repository.AllReadOnly<Client>()
+            var client = await repository.All<Client>()
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
 
@@ -45,7 +45,7 @@ namespace BestHomeServices.Core.Services
 
                 specialist.IsBusy = true;
                 specialist.Projects.Add(newProject);
-
+                
                 await repository.SaveChangesAsync();
             }
 

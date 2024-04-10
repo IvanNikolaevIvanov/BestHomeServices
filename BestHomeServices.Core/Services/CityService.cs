@@ -1,5 +1,8 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Models.City;
+using BestHomeServices.Infrastructure.Data.Common;
+using BestHomeServices.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +13,30 @@ namespace BestHomeServices.Core.Services
 {
     public class CityService : ICityService
     {
-        public Task<IEnumerable<CityViewModel>> GetAllCitiesAsync()
+        private readonly IRepository repository;
+
+        public CityService(IRepository _repository)
         {
-            throw new NotImplementedException();
+            repository = _repository;
+        }
+
+        public async Task<ICollection<City>> GetAllCitiesAsync()
+        {
+            return await repository.AllReadOnly<City>()              
+                .ToListAsync();
+        }
+
+        public async Task<City> GetCityByIdAsync(int id)
+        {
+            var city = await repository.AllReadOnly<City>()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (city == null)
+            {
+                throw new ArgumentNullException(nameof(city));
+            }
+
+            return city;
         }
     }
 }

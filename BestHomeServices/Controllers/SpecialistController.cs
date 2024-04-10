@@ -64,7 +64,7 @@ namespace BestHomeServices.Controllers
             await specialistService.HireSpecialistByIdAsync(model.SpecialistId, User.Id());
 
            
-            return RedirectToAction(nameof(ClientController.All), "Client");
+            return RedirectToAction(nameof(ClientController.MyProfile), "Client");
         }
     }
 }
