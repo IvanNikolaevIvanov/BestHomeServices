@@ -11,7 +11,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
         {
             var data = new SeedData();
 
-            builder.HasData(new IdentityUser[] { data.ClientUser, data.SpecialistUser });
+            builder.HasData(new IdentityUser[] { data.ClientUser });
         }
     }
 }

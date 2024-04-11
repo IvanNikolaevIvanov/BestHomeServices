@@ -31,17 +31,17 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
         {
             var hasher = new PasswordHasher<IdentityUser>();
 
-            SpecialistUser = new IdentityUser()
-            {
-                Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                UserName = "specialist1@mail.com",
-                NormalizedUserName = "specialist1@mail.com",
-                Email = "specialist1@mail.com",
-                NormalizedEmail = "specialist1@mail.com"
-            };
+            //SpecialistUser = new IdentityUser()
+            //{
+            //    Id = "dea12856-c198-4129-b3f3-b893d8395082",
+            //    UserName = "specialist1@mail.com",
+            //    NormalizedUserName = "specialist1@mail.com",
+            //    Email = "specialist1@mail.com",
+            //    NormalizedEmail = "specialist1@mail.com"
+            //};
 
-            SpecialistUser.PasswordHash =
-                 hasher.HashPassword(SpecialistUser, "specialist123");
+            //SpecialistUser.PasswordHash =
+            //     hasher.HashPassword(SpecialistUser, "specialist123");
 
             ClientUser = new IdentityUser()
             {
@@ -137,8 +137,10 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 PhoneNumber = "0012233556",
                 CityId = 1,
                 ImageUrl = "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=",
-                UserId = SpecialistUser.Id
+                //UserId = SpecialistUser.Id
             };
+
+           
 
         }
 
