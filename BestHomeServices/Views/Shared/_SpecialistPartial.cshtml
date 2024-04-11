@@ -12,6 +12,10 @@
         {
             <a asp-area="" asp-controller="Specialist" asp-action="Hire"
                asp-route-id="@Model.Id" class="btn btn-success">Hire</a>
+        } else
+        {
+            <a class="ml-2 btn btn-danger mb-3" asp-controller="Client" asp-action="Remove"
+               asp-route-id="@Model.Id">Remove</a>
         }
 
     </div>

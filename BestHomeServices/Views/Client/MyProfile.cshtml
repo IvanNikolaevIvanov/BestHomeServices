@@ -2,8 +2,8 @@
 @inject ICityService cityService
 @{
     ViewBag.Title = "My Profile";
-    var clientCity = await cityService.GetCityByIdAsync(Model.ClientInfo.CityId); 
-    
+    var clientCity = await cityService.GetCityByIdAsync(Model.ClientInfo.CityId);
+
 }
 
 
@@ -17,24 +17,20 @@
             <p>City: @clientCity.Name</p>
             <p>Address: @Model.ClientInfo.Address</p>
             <p>Phone number: @Model.ClientInfo.PhoneNumber</p>
-            <a asp-area="" asp-controller="Client" asp-action="Edit" 
-            class="btn btn-outline-warning mb-3">Edit</a>
+            <a asp-area="" asp-controller="Client" asp-action="Edit"
+               class="btn btn-outline-warning mb-3">Edit</a>
         </div>
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="col-md-4 mt-3 mb-3">
-        @foreach (var specialist in @Model.ClientSpecialists)
-        {
-            <partial name="_SpecialistPartial" model="@specialist" />
+<div class="card-group col-md-4 mt-3 mb-3">
 
-            @specialist.Id
+    @foreach (var specialist in @Model.ClientSpecialists)
+    {
+        <partial name="_SpecialistPartial" model="@specialist" />
+       
+    }
 
-            <a class="ml-2 btn btn-danger" asp-controller="Client" asp-action="Remove"
-               asp-route-id="@specialist.Id">Remove</a>
-        }
-    </div>
 </div>
 
 @section Scripts {
