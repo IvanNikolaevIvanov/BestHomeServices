@@ -5,7 +5,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
-        public IdentityUser SpecialistUser { get; set; }
+        //public IdentityUser SpecialistUser { get; set; }
         public IdentityUser ClientUser { get; set; }
         public Category ElectricianCategory { get; set; }
         public Category PlumberCategory { get; set; }
@@ -14,6 +14,8 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
         public City PafosCity { get; set; }
         public City LimasolCity { get; set; }
         public Specialist FirstSpecialist { get; set; }
+        public Specialist SecondSpecialist { get; set; }
+        public Specialist ThirdSpecialist { get; set; }
         public Client FirstClient { get; set; }
         public Project FirstProject { get; set; }
 
@@ -140,7 +142,32 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 //UserId = SpecialistUser.Id
             };
 
-           
+            SecondSpecialist = new Specialist()
+            {
+                Id = 2,
+                CategoryId = PlumberCategory.Id,
+                FirstName = "Pesho",
+                LastName = "Peshev",
+                Description = "This is one of the best plumbers in the area.",
+                PhoneNumber = "0012233559",
+                CityId = 1,
+                ImageUrl = "https://degraceplumbing.com/wp-content/uploads/2016/02/NJ-plumber-300x200.jpg",
+                
+            };
+
+            ThirdSpecialist = new Specialist()
+            {
+                Id = 3,
+                CategoryId = HandymanCategory.Id,
+                FirstName = "Stefka",
+                LastName = "Zlateva",
+                Description = "This is one of the best handymen in the area.",
+                PhoneNumber = "0012233552",
+                CityId = 2,
+                ImageUrl = "https://image1.masterfile.com/getImage/NjAwLTA2NjcxNzUwZW4uMDAwMDAwMDA=AKvV1Y/600-06671750en_Masterfile.jpg",
+                
+            };
+
 
         }
 

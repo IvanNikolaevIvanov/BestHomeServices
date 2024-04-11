@@ -16,7 +16,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
              .WithMany(c => c.Specialists)
              .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(new Specialist[] { data.FirstSpecialist });
+            builder.HasData(new Specialist[] { data.FirstSpecialist, data.SecondSpecialist, data.ThirdSpecialist });
             
         }
     }
