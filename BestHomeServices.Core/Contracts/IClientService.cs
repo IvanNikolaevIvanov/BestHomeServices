@@ -19,5 +19,7 @@ namespace BestHomeServices.Core.Contracts
         Task EditInfoAsync(string userId, ClientInfoForm model);
 
         Task RemoveSpecialistFromClient(string userId, int id);
+
+        Task<ClientsServiceModel> GetClientByUserId(string id);
     }
 }
