@@ -5,7 +5,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
-        //public IdentityUser SpecialistUser { get; set; }
+        public IdentityUser AdminUser { get; set; }
         public IdentityUser ClientUser { get; set; }
         public Category ElectricianCategory { get; set; }
         public Category PlumberCategory { get; set; }
@@ -33,25 +33,27 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
         {
             var hasher = new PasswordHasher<IdentityUser>();
 
-            //SpecialistUser = new IdentityUser()
-            //{
-            //    Id = "dea12856-c198-4129-b3f3-b893d8395082",
-            //    UserName = "specialist1@mail.com",
-            //    NormalizedUserName = "specialist1@mail.com",
-            //    Email = "specialist1@mail.com",
-            //    NormalizedEmail = "specialist1@mail.com"
-            //};
+            AdminUser = new IdentityUser()
+            {
+                Id = "c5b3928f-781a-4d2b-88c5-c6a10572e32b",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                EmailConfirmed = true
+            };
 
-            //SpecialistUser.PasswordHash =
-            //     hasher.HashPassword(SpecialistUser, "specialist123");
+            AdminUser.PasswordHash =
+                hasher.HashPassword(AdminUser, "admin123");
 
             ClientUser = new IdentityUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "client@mail.com",
-                NormalizedUserName = "client@mail.com",
+                NormalizedUserName = "CLIENT@MAIL.COM",
                 Email = "client@mail.com",
-                NormalizedEmail = "client@mail.com"
+                NormalizedEmail = "CLIENT@MAIL.COM",
+                EmailConfirmed = true
             };
 
             ClientUser.PasswordHash =
@@ -139,7 +141,7 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
                 PhoneNumber = "0012233556",
                 CityId = 1,
                 ImageUrl = "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=",
-                //UserId = SpecialistUser.Id
+                
             };
 
             SecondSpecialist = new Specialist()

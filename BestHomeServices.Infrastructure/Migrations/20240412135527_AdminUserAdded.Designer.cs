@@ -4,6 +4,7 @@ using BestHomeServices.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestHomeServices.Infrastructure.Migrations
 {
     [DbContext(typeof(BestHomeServicesDb))]
-    partial class BestHomeServicesDbModelSnapshot : ModelSnapshot
+    [Migration("20240412135527_AdminUserAdded")]
+    partial class AdminUserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
