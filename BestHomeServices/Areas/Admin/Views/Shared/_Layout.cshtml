@@ -1,5 +1,4 @@
-﻿@using BestHomeServices.Components
-
+﻿@using BestHomeServices.Areas.Admin.Components
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,8 +19,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @await Component.InvokeAsync(nameof(MainMenuComponent))
-                    <partial name="_LoginPartial" />
+                    @await Component.InvokeAsync(nameof(AdminMenuComponent))
+                    <partial name="_AdminPartial" />
                 </div>
             </div>
         </nav>
@@ -34,7 +33,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Today.Year - BestHomeServices
+            &copy; @DateTime.Today.Year - BestHomeServices <span class="alert-danger">Administrator Area</span>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
