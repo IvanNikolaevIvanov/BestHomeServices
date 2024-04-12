@@ -42,9 +42,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
-                
+
             })
-                 .AddEntityFrameworkStores<BestHomeServicesDb>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<BestHomeServicesDb>();
 
             return services;
         }
