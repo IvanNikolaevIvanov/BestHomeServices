@@ -1,8 +1,6 @@
 ﻿using BestHomeServices.Core.Contracts;
 using BestHomeServices.Core.Enumerations;
 using BestHomeServices.Core.Models.Category;
-using BestHomeServices.Core.Models.City;
-using BestHomeServices.Core.Models.Home;
 using BestHomeServices.Core.Models.Specialist;
 using BestHomeServices.Infrastructure.Data.Common;
 using BestHomeServices.Infrastructure.Data.Models;

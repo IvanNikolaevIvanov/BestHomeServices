@@ -82,6 +82,12 @@ namespace BestHomeServices.Core.Services
             return model;
         }
 
+        public async Task<Client> GetClientEntityByUserIdAsync(string id)
+        {
+            return await repository.All<Client>()
+                .FirstAsync(c => c.UserId == id);
+        }
+
         public async Task<ShowClientInfoModel> GetClientInfoByUserId(string id)
         {
             var model = new ShowClientInfoModel();

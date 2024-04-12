@@ -13,17 +13,20 @@ namespace BestHomeServices.Controllers
         private readonly ICategoryService categoryService;
         private readonly ISpecialistService specialistService;
         private readonly IClientService clientService;
+        private readonly ICityService cityService;
 
         public SpecialistController(
             ILogger<HomeController> logger,
             ICategoryService _categoryService,
             ISpecialistService _specialistService,
-            IClientService _clientService)
+            IClientService _clientService,
+            ICityService _cityService)
         {
             _logger = logger;
             categoryService = _categoryService;
             specialistService = _specialistService;
             clientService = _clientService;
+            cityService = _cityService;
         }
 
         [HttpGet]
@@ -49,6 +52,8 @@ namespace BestHomeServices.Controllers
             if (await specialistService.SpecialistExistsAsync(model.SpecialistId) == false)
             {
                 ModelState.AddModelError(nameof(model.SpecialistId), "Specialist doesn't exist");
+
+                return BadRequest(ModelState);
             }
 
             if (!ModelState.IsValid)
@@ -56,15 +61,31 @@ namespace BestHomeServices.Controllers
                 return View(model);
             }
 
+            var specialist = await specialistService.GetSpecialistByIdAsync(model.SpecialistId);
+            var specialistCity = await cityService.GetCityByIdAsync(specialist.CityId);
+
             if (await clientService.ClientExistsAsync(User.Id()) == false)
             {
                 await clientService.AddClientAsync(User.Id(), model.ClientName, model.ClientAddress, model.ClientCity, model.ClientPhoneNumber);
             }
             
-            await specialistService.HireSpecialistByIdAsync(model.SpecialistId, User.Id());
+            var client = await clientService.GetClientEntityByUserIdAsync(User.Id());
+            var clientCity = await cityService.GetCityByIdAsync(client.CityId);
 
-           
-            return RedirectToAction(nameof(ClientController.MyProfile), "Client");
+            if (specialistCity.Name != clientCity.Name)
+            {
+                ModelState.AddModelError(nameof(clientCity.Name), "Specialist doesn't operate in this area");
+
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                await specialistService.HireSpecialistByIdAsync(specialist, client);
+
+
+                return RedirectToAction(nameof(ClientController.MyProfile), "Client");
+            }
+            
         }
     }
 }

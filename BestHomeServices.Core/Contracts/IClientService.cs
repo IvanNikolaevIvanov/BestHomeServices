@@ -1,4 +1,5 @@
 ﻿using BestHomeServices.Core.Models.Client;
+using BestHomeServices.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace BestHomeServices.Core.Contracts
         Task RemoveSpecialistFromClient(string userId, int id);
 
         Task<ClientsServiceModel> GetClientByUserId(string id);
+
+        Task<Client> GetClientEntityByUserIdAsync(string id);
     }
 }
