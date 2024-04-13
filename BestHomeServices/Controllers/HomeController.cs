@@ -4,6 +4,7 @@ using BestHomeServices.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BestHomeServices.Controllers
 {
@@ -24,6 +25,7 @@ namespace BestHomeServices.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery]AllCategoriesIndexServiceModel query)
         {
+           
             var model = await categoryService.AllCategoriesAsync(
                 query.Cities,
                 query.Category);

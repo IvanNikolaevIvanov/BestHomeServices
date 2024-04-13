@@ -7,14 +7,32 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+@* <div class="row">
+    <div class="col-md-1">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" />
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+                <p class="card-text">@Model.Description</p>
+                <a href="#" class="btn btn-warning">Edit</a>
+                <a href="#" class="btn btn-danger">Remove</a>
+            </div>
+        </div>
+    </div>
+</div> *@
+
 <div class="container" style="display:flex">
     <div class="row">
-        <div class="col-4">
-            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" /> 
-        </div>
-        <div class="card col-8 border-0">
-            <p style="font-size:25px;"><u>@Model.Title</u></p>
-            <p>Description: <b>@Model.Description</b></p>
+        <div class="col-md-1">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" />
+
+                <div class="card-body">
+                    <p style="font-size:25px;"><u>@Model.Title</u></p>
+                    <p>Description: <b>@Model.Description</b></p>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -5,6 +5,12 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    if (User.IsAdmin())
+        {
+            <li class="nav-item">
+                <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Dashboard">To Admin Area</a>
+            </li>
+        }
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
