@@ -10,7 +10,7 @@ namespace BestHomeServices.Core.Contracts
 {
     public interface ICityService
     {
-        Task<ICollection<City>> GetAllCitiesAsync();
+        Task<ICollection<CityViewModel>> GetAllCitiesAsync();
 
         Task<City> GetCityByIdAsync(int id);
     }

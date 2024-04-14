@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BestHomeServices.Areas.Admin.Controllers
 {
     public class CityController : AdminBaseController
     {
-        public IActionResult Index()
+        private readonly ICityService cityService;
+
+        public CityController(ICityService _cityService)
         {
-            return View();
+            cityService = _cityService;
+        }
+
+        public async Task<IActionResult> AllCities()
+        {
+            var model = await cityService.GetAllCitiesAsync();
+
+            return View(model);
         }
     }
 }

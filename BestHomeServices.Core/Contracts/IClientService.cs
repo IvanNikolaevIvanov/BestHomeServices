@@ -24,5 +24,7 @@ namespace BestHomeServices.Core.Contracts
         Task<ClientsServiceModel> GetClientByUserId(string id);
 
         Task<Client> GetClientEntityByUserIdAsync(string id);
+
+        Task<IEnumerable<ClientDetailsViewModel>> GetAllClientsAsync();
     }
 }

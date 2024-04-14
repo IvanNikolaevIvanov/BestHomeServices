@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SpecialistDetailsViewModel>
+
+@{
+    ViewBag.Title = "All Specialists";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <a asp-area="Admin" asp-controller="Specialist" asp-action="AddSpecialist"
+       class="btn btn-primary">Add A New Specialist</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Id</label></th>
+            <th><label>First Name</label></th>
+            <th><label>Last Name</label></th>
+            <th><label>Photo</label></th>
+            <th><label>Description</label></th>
+            <th><label>Phone Number</label></th>
+            <th><label>Category Id</label></th>
+            <th><label>Category Title</label></th>
+            <th><label>City Id</label></th>
+            <th><label>City Name</label></th>
+            <th><label>Projects</label></th>
+            <th><label>IsBusy</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialist in Model)
+        {
+            <tr>
+                <td>
+                    <label>@specialist.Id</label>
+                </td>
+                <td>
+                    <label>@specialist.FirstName</label>
+                </td>
+                <td>
+                    <label>@specialist.LastName</label>
+                </td>
+                <td>
+                    <img class="img-fluid" src="@Url.Content(specialist.ImageUrl)" alt="Photo">
+                </td>
+                <td>
+                    <label>@specialist.Description</label>
+                </td>
+                <td>
+                    <label>@specialist.PhoneNumber</label>
+                </td>
+                <td>
+                    <label>@specialist.CategoryId</label>
+                </td>
+                <td>
+                    <label>@specialist.CategoryName</label>
+                </td>
+                <td>
+                    <label>@specialist.CityId</label>
+                </td>
+                <td>
+                    <label>@specialist.CityName</label>
+                </td>
+                <td>
+                    <label>@specialist.NumberOfProjects</label>
+                </td>
+                <td>
+                    @if (!specialist.IsBusy)
+                    {
+                        <label>✔</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-warning m-1" asp-controller="Specialist" asp-action="EditSpecialist"
+                       asp-route-id="@specialist.Id">Edit</a>
+                    <a class="btn btn-danger m-1" asp-controller="Specialist" asp-action="DeleteSpecialist"
+                       asp-route-id="@specialist.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

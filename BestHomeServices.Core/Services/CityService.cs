@@ -20,9 +20,14 @@ namespace BestHomeServices.Core.Services
             repository = _repository;
         }
 
-        public async Task<ICollection<City>> GetAllCitiesAsync()
+        public async Task<ICollection<CityViewModel>> GetAllCitiesAsync()
         {
-            return await repository.AllReadOnly<City>()              
+            return await repository.AllReadOnly<City>()
+                .Select(c => new CityViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
                 .ToListAsync();
         }
 

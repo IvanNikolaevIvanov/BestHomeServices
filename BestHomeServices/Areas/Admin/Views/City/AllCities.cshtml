@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CityViewModel>
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <a asp-area="Admin" asp-controller="City" asp-action="AddCity"
+       class="btn btn-primary">Add A New City</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Id</label></th>
+            <th><label>City</label></th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in Model)
+        {
+            <tr>
+                <td>
+                    <label>@city.Id</label>
+                </td>
+                <td>
+                    <label>@city.Name</label>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

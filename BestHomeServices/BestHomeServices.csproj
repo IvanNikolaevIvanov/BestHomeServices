@@ -27,10 +27,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Client\" />
-    <Folder Include="Areas\Admin\Views\City\" />
-    <Folder Include="Areas\Admin\Views\Project\" />
-    <Folder Include="Areas\Admin\Views\Specialist\" />
   </ItemGroup>
 
 </Project>

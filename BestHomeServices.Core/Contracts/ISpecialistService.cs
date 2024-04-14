@@ -10,5 +10,7 @@ namespace BestHomeServices.Core.Contracts
         Task HireSpecialistByIdAsync(Specialist specialist, Client client);
 
         Task<Specialist> GetSpecialistByIdAsync(int id);
+
+        Task<IEnumerable<SpecialistDetailsViewModel>> GetAllSpecialistsAsync();
     }
 }

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ClientDetailsViewModel>
+@{
+    ViewBag.Title = "All Clients";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>UserId</label></th>
+            <th><label>Name</label></th>
+            <th><label>PhoneNumber</label></th>
+            <th><label>CityId</label></th>
+            <th><label>City</label></th>
+            <th><label>Address</label></th>
+            <th><label>SpecialistId</label></th>
+            <th><label>SpecialistName</label></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>
+                    <label>@client.UserId</label>
+                </td>
+                <td>
+                    <label>@client.Name</label>
+                </td>
+                <td>
+                    <label>@client.PhoneNumber</label>
+                </td>
+                <td>
+                    <label>@client.CityId</label>
+                </td>
+                <td>
+                    <label>@client.CityName</label>
+                </td>
+                <td>
+                    <label>@client.Address</label>
+                </td>
+                <td>
+                    <label>@client.SpecialistId</label>
+                </td>
+                <td>
+                    <label>@client.SpecialistName</label>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

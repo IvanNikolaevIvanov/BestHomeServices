@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BestHomeServices.Areas.Admin.Controllers
 {
     public class SpecialistController : AdminBaseController
     {
-        public IActionResult Index()
+        private readonly ISpecialistService specialistService;
+
+        public SpecialistController(ISpecialistService _specialistService)
         {
-            return View();
+            specialistService = _specialistService;
+        }
+
+        public async Task<IActionResult> AllSpecialists()
+        {
+            var model = await specialistService.GetAllSpecialistsAsync();
+
+            return View(model);
         }
     }
 }

@@ -67,6 +67,27 @@ namespace BestHomeServices.Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ClientDetailsViewModel>> GetAllClientsAsync()
+        {
+            var clients = await repository.AllReadOnly<Project>()
+                .Include(p => p.Client)
+                .Include(p => p.Specialist)
+                .Select(p => new ClientDetailsViewModel()
+                {
+                    Name = p.Client.Name,
+                    Address = p.Client.Address,
+                    CityId = p.Client.CityId,
+                    CityName = p.Client.City.Name,
+                    PhoneNumber = p.Client.PhoneNumber,
+                    UserId = p.Client.UserId,
+                    SpecialistId = p.SpecialistId,
+                    SpecialistName = $"{p.Specialist.FirstName} {p.Specialist.LastName}"
+                })
+                .ToListAsync();
+
+            return clients;
+        }
+
         public async Task<ClientsServiceModel> GetClientByUserId(string id)
         {
             var client = await repository.AllReadOnly<Client>()
