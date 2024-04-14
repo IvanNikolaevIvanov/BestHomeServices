@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CategoryViewModel>
+
+@{
+    ViewBag.Title = "All Categories";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <a asp-area="Admin" asp-controller="Category" asp-action="AddCategory"
+       class="btn btn-outline-primary">Add A New Category</a>
+</div>
+
+<div class="card-group">
+@foreach (var category in Model)
+{
+    <partial name="_CategoryPartial" model="@category" />
+}
+</div>

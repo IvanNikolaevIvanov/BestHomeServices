@@ -13,7 +13,7 @@
 {
     <div class="row">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-            <form asp-action="Hire" method="post">
+            <form asp-area="" asp-action="Hire" method="post">
 
                 <div class="mb-3">
                     <label asp-for="@Model.ClientName" class="form-label-add-edit">Your Name:</label>
@@ -67,7 +67,7 @@
 
     <div class="row">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-            <form asp-action="Hire" method="post">
+            <form asp-area="" asp-action="Hire" method="post">
                 <div class="mb-3">
                     <label asp-for="@Model.ClientName" class="control-label"></label>
                     <input asp-for="@Model.ClientName" class="form-control"  />

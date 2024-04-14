@@ -4,7 +4,7 @@ using static BestHomeServices.Core.Constants.AdministratorConstants;
 
 namespace BestHomeServices.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(AdminAreaName)]
     [Authorize(Roles = AdminRole)]
     public class AdminBaseController : Controller
     {

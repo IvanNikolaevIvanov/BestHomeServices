@@ -1,6 +1,7 @@
 ﻿using BestHomeServices.Core.Enumerations;
 using BestHomeServices.Core.Models.Category;
 using BestHomeServices.Core.Models.Home;
+using BestHomeServices.Infrastructure.Data.Models;
 
 namespace BestHomeServices.Core.Contracts
 {
@@ -14,6 +15,14 @@ namespace BestHomeServices.Core.Contracts
         Task<bool> ExistsAsync(int id);
 
         Task<CategoryDetailsViewModel> CategoryDetailsByIdAsync(int id);
+
+        Task AddCategoryAsync(CategoryFormModel model);
+
+        Task DeleteCategoryAsync(int id);
+
+        Task EditAsync(int id, CategoryDetailsViewModel model);
+
+        Task<CategoryFormModel> GetCategoryFormByIdAsync(int id);
 
     }
 }

@@ -6,12 +6,15 @@
 <div class="row">
     <div class="col-md-1">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="Category Image" />
+            <img class="card-img-top" src="@Url.Content(Model.ImgUrl)" alt="" onerror="this.style.display='none'">
+            <img class="card-img-top" src="~/@Url.Content(Model.ImgUrl)" alt="" onerror="this.style.display='none'">
             <div class="card-body">
                 <h5 class="card-title">@Model.Title</h5>
                 <p class="card-text">@Model.Description</p>
-                <a href="#" class="btn btn-warning">Edit</a>
-                <a href="#" class="btn btn-danger">Remove</a>
+                <a class="btn btn-warning" asp-controller="Category" asp-action="EditCategory"
+                   asp-route-id="@Model.Id">Edit</a>
+                <a class="ml-2 btn btn-danger" asp-controller="Category" asp-action="DeleteCategory"
+                   asp-route-id="@Model.Id">Delete</a>
             </div>
         </div>
     </div>

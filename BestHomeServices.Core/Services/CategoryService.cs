@@ -123,5 +123,55 @@ namespace BestHomeServices.Core.Services
 
             return category;
         }
+
+        public async Task AddCategoryAsync(CategoryFormModel model)
+        {
+            Category categoryToAdd = new Category();
+
+            categoryToAdd.Title = model.Title;
+            categoryToAdd.Description = model.Description;
+            categoryToAdd.ImgUrl = model.ImgUrl;
+
+            await repository.AddAsync(categoryToAdd);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteCategoryAsync(int id)
+        {
+            await repository.DeleteAsync<Category>(id);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(int id, CategoryDetailsViewModel model)
+        {
+            var category = await repository.GetByIdAsync<Category>(id);
+
+            if (category != null)
+            {
+                category.Title = model.Title;
+                category.Description = model.Description;
+                category.ImgUrl = model.ImgUrl;
+
+                await repository.SaveChangesAsync();
+            }
+
+        }
+
+        public async Task<CategoryFormModel> GetCategoryFormByIdAsync(int id)
+        {
+            var category = await repository.AllReadOnly<Category>()
+                .Where(c => c.Id == id)
+                .Select(c => new CategoryFormModel()
+                {
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImgUrl = c.ImgUrl,
+                })
+                .FirstAsync();
+
+
+
+            return category;
+        }
     }
 }
