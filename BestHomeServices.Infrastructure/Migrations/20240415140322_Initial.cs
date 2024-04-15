@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BestHomeServices.Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -174,18 +174,19 @@ namespace BestHomeServices.Infrastructure.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "City's identifier"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "City's Name")
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "City's identifier")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "City's Name"),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cities_Categories_Id",
-                        column: x => x.Id,
+                        name: "FK_Cities_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 },
                 comment: "Cities in which service is provided");
 
@@ -232,18 +233,11 @@ namespace BestHomeServices.Infrastructure.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false, comment: "Specialist's Photo"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Category Identifier"),
                     CityId = table.Column<int>(type: "int", nullable: false, comment: "Specialist's city identifier."),
-                    IsBusy = table.Column<bool>(type: "bit", nullable: false, comment: "A boolean stating if the specialist is available to be hired"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "User's identifier")
+                    IsBusy = table.Column<bool>(type: "bit", nullable: false, comment: "A boolean stating if the specialist is available to be hired")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specialists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Specialists_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Specialists_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -289,8 +283,8 @@ namespace BestHomeServices.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "9c44750a-18d1-45dc-8f6c-263770f3013b", "client@mail.com", false, false, null, "client@mail.com", "client@mail.com", "AQAAAAEAACcQAAAAEGDXEHypLqWQ2LbULbnS3Uiu10rPS5Sx+2z+EUNLbPzplZJlaLTiUDHqC/RyxORrpw==", null, false, "ce611e65-fc26-4c67-9b89-0c19e22107bc", false, "client@mail.com" },
-                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "2836ef76-07fa-481a-b3cb-91cda684496c", "specialist1@mail.com", false, false, null, "specialist1@mail.com", "specialist1@mail.com", "AQAAAAEAACcQAAAAEGq/nKWRuGx0JsO2Vf6RNugRSlsicYeCb8hRn5MexWjK1OSaM7JlJ3NSCj1ZsAqBvg==", null, false, "c0833ef2-fb16-4b4b-ab5b-17553865a33a", false, "specialist1@mail.com" }
+                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "d3c9466a-57c7-4c67-8bfd-62f6545db47d", "client@mail.com", true, false, null, "CLIENT@MAIL.COM", "CLIENT@MAIL.COM", "AQAAAAEAACcQAAAAEMxFz7WSREEye+5AP1UzbvA16qO33y7g3rF8QuYi0EPTAA29TdxDreNnbXeHEqtI3Q==", null, false, "61bb28f6-039c-4566-aa2d-2a7c620288bd", false, "client@mail.com" },
+                    { "c5b3928f-781a-4d2b-88c5-c6a10572e32b", 0, "3194df3a-337b-4ed3-a016-b7b0ea238dfa", "admin@mail.com", true, false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAEAACcQAAAAEKx90UHhl5nbs6NmA4V1a0gq3NGK1xG6FjLwu7i9ArQXaGxryjTmlu/eKB3duDJWNw==", null, false, "d8ec7d09-047a-4d75-91d1-62f70e3e1c8a", false, "admin@mail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -298,25 +292,20 @@ namespace BestHomeServices.Infrastructure.Migrations
                 columns: new[] { "Id", "Description", "ImgUrl", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Hire one of the most experienced electricians in your area.", "~/images/electrical.png", "Electrician" },
-                    { 2, "Hire one of the most experienced plumbers in your area.", "~/images/plumber.png", "Plumber" },
-                    { 3, "Hire one of the most experienced handymen in your area.", "~/images/handyman.png", "Handyman" }
+                    { 1, "Hire one of the most experienced electricians in your area.", "images/electrical.png", "Electrician" },
+                    { 2, "Hire one of the most experienced plumbers in your area.", "images/plumber.png", "Plumber" },
+                    { 3, "Hire one of the most experienced handymen in your area.", "images/handyman.png", "Handyman" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Cities",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Larnaca" });
-
-            migrationBuilder.InsertData(
-                table: "Cities",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Pafos" });
-
-            migrationBuilder.InsertData(
-                table: "Cities",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Limasol" });
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, "Larnaca" },
+                    { 2, null, "Pafos" },
+                    { 3, null, "Limasol" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Clients",
@@ -325,8 +314,13 @@ namespace BestHomeServices.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Specialists",
-                columns: new[] { "Id", "CategoryId", "CityId", "Description", "FirstName", "ImageUrl", "IsBusy", "LastName", "PhoneNumber", "UserId" },
-                values: new object[] { 1, 1, 1, "This is one of the best electricians in the area.", "Ivan", "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=", false, "Ivanov", "0012233556", "dea12856-c198-4129-b3f3-b893d8395082" });
+                columns: new[] { "Id", "CategoryId", "CityId", "Description", "FirstName", "ImageUrl", "IsBusy", "LastName", "PhoneNumber" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "This is one of the best electricians in the area.", "Ivan", "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=", false, "Ivanov", "0012233556" },
+                    { 2, 2, 1, "This is one of the best plumbers in the area.", "Pesho", "https://degraceplumbing.com/wp-content/uploads/2016/02/NJ-plumber-300x200.jpg", false, "Peshev", "0012233559" },
+                    { 3, 3, 2, "This is one of the best handymen in the area.", "Stefka", "https://image1.masterfile.com/getImage/NjAwLTA2NjcxNzUwZW4uMDAwMDAwMDA=AKvV1Y/600-06671750en_Masterfile.jpg", false, "Zlateva", "0012233552" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Projects",
@@ -373,6 +367,11 @@ namespace BestHomeServices.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cities_CategoryId",
+                table: "Cities",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clients_CityId",
                 table: "Clients",
                 column: "CityId");
@@ -396,11 +395,6 @@ namespace BestHomeServices.Infrastructure.Migrations
                 name: "IX_Specialists_CityId",
                 table: "Specialists",
                 column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Specialists_UserId",
-                table: "Specialists",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

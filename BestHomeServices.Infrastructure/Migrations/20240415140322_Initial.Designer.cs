@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestHomeServices.Infrastructure.Migrations
 {
     [DbContext(typeof(BestHomeServicesDb))]
-    [Migration("20240411200129_SpecialistUserRemoved")]
-    partial class SpecialistUserRemoved
+    [Migration("20240415140322_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,8 +84,14 @@ namespace BestHomeServices.Infrastructure.Migrations
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.City", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasComment("City's identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -94,6 +100,8 @@ namespace BestHomeServices.Infrastructure.Migrations
                         .HasComment("City's Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Cities");
 
@@ -274,6 +282,30 @@ namespace BestHomeServices.Infrastructure.Migrations
                             IsBusy = false,
                             LastName = "Ivanov",
                             PhoneNumber = "0012233556"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            CityId = 1,
+                            Description = "This is one of the best plumbers in the area.",
+                            FirstName = "Pesho",
+                            ImageUrl = "https://degraceplumbing.com/wp-content/uploads/2016/02/NJ-plumber-300x200.jpg",
+                            IsBusy = false,
+                            LastName = "Peshev",
+                            PhoneNumber = "0012233559"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            CityId = 2,
+                            Description = "This is one of the best handymen in the area.",
+                            FirstName = "Stefka",
+                            ImageUrl = "https://image1.masterfile.com/getImage/NjAwLTA2NjcxNzUwZW4uMDAwMDAwMDA=AKvV1Y/600-06671750en_Masterfile.jpg",
+                            IsBusy = false,
+                            LastName = "Zlateva",
+                            PhoneNumber = "0012233552"
                         });
                 });
 
@@ -398,17 +430,33 @@ namespace BestHomeServices.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8e91d3e-671e-42e3-9c38-6bf2d2dbcea3",
+                            ConcurrencyStamp = "d3c9466a-57c7-4c67-8bfd-62f6545db47d",
                             Email = "client@mail.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "client@mail.com",
-                            NormalizedUserName = "client@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG1SyzcD2fbSGb0ICTnWGnkpXtvqeAajsCRQfYTjprN8YCHpx1xra8MAymQhbqulpA==",
+                            NormalizedEmail = "CLIENT@MAIL.COM",
+                            NormalizedUserName = "CLIENT@MAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMxFz7WSREEye+5AP1UzbvA16qO33y7g3rF8QuYi0EPTAA29TdxDreNnbXeHEqtI3Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "63b18086-8743-4067-affb-a12e84dfc814",
+                            SecurityStamp = "61bb28f6-039c-4566-aa2d-2a7c620288bd",
                             TwoFactorEnabled = false,
                             UserName = "client@mail.com"
+                        },
+                        new
+                        {
+                            Id = "c5b3928f-781a-4d2b-88c5-c6a10572e32b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3194df3a-337b-4ed3-a016-b7b0ea238dfa",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN@MAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKx90UHhl5nbs6NmA4V1a0gq3NGK1xG6FjLwu7i9ArQXaGxryjTmlu/eKB3duDJWNw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d8ec7d09-047a-4d75-91d1-62f70e3e1c8a",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@mail.com"
                         });
                 });
 
@@ -501,9 +549,7 @@ namespace BestHomeServices.Infrastructure.Migrations
                 {
                     b.HasOne("BestHomeServices.Infrastructure.Data.Models.Category", null)
                         .WithMany("Cities")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Client", b =>

@@ -5,19 +5,19 @@ namespace BestHomeServices.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
-        public IdentityUser AdminUser { get; set; }
-        public IdentityUser ClientUser { get; set; }
-        public Category ElectricianCategory { get; set; }
-        public Category PlumberCategory { get; set; }
-        public Category HandymanCategory { get; set; }
-        public City LarnacaCity { get; set; }
-        public City PafosCity { get; set; }
-        public City LimasolCity { get; set; }
-        public Specialist FirstSpecialist { get; set; }
-        public Specialist SecondSpecialist { get; set; }
-        public Specialist ThirdSpecialist { get; set; }
-        public Client FirstClient { get; set; }
-        public Project FirstProject { get; set; }
+        public IdentityUser AdminUser { get; set; } = null!;
+        public IdentityUser ClientUser { get; set; } = null!;
+        public Category ElectricianCategory { get; set; } = null!;
+        public Category PlumberCategory { get; set; } = null!;
+        public Category HandymanCategory { get; set; } = null!;
+        public City LarnacaCity { get; set; } = null!;
+        public City PafosCity { get; set; } = null!;
+        public City LimasolCity { get; set; } = null!;
+        public Specialist FirstSpecialist { get; set; } = null!;
+        public Specialist SecondSpecialist { get; set; } = null!;
+        public Specialist ThirdSpecialist { get; set; } = null!;
+        public Client FirstClient { get; set; } = null!;
+        public Project FirstProject { get; set; } = null!;
 
         public SeedData()
         {

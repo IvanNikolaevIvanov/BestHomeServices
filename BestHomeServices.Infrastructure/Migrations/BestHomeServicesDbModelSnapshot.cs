@@ -82,8 +82,14 @@ namespace BestHomeServices.Infrastructure.Migrations
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.City", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasComment("City's identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -92,6 +98,8 @@ namespace BestHomeServices.Infrastructure.Migrations
                         .HasComment("City's Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Cities");
 
@@ -420,15 +428,15 @@ namespace BestHomeServices.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d8054ec4-5400-4ec6-aa54-9a98016370a8",
+                            ConcurrencyStamp = "d3c9466a-57c7-4c67-8bfd-62f6545db47d",
                             Email = "client@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CLIENT@MAIL.COM",
                             NormalizedUserName = "CLIENT@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFeBKd1yGkJ30LNXE03RplzikkJCj95KB8lPzsGxGyknc72glFtc+j7LI9+lGnAhjA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMxFz7WSREEye+5AP1UzbvA16qO33y7g3rF8QuYi0EPTAA29TdxDreNnbXeHEqtI3Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23219567-6bcc-4fae-9eea-119e0b471a88",
+                            SecurityStamp = "61bb28f6-039c-4566-aa2d-2a7c620288bd",
                             TwoFactorEnabled = false,
                             UserName = "client@mail.com"
                         },
@@ -436,15 +444,15 @@ namespace BestHomeServices.Infrastructure.Migrations
                         {
                             Id = "c5b3928f-781a-4d2b-88c5-c6a10572e32b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b532a45b-bcaf-4a03-95b7-2a1668d34174",
+                            ConcurrencyStamp = "3194df3a-337b-4ed3-a016-b7b0ea238dfa",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECklVjPqAknxYWs+mv9XNO1Xmlrfekx09dD9onSF7noRXHfhxePBZfPJbkwN+a1tjg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKx90UHhl5nbs6NmA4V1a0gq3NGK1xG6FjLwu7i9ArQXaGxryjTmlu/eKB3duDJWNw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2af3a071-5ebc-4656-858f-690656b85c6f",
+                            SecurityStamp = "d8ec7d09-047a-4d75-91d1-62f70e3e1c8a",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -539,9 +547,7 @@ namespace BestHomeServices.Infrastructure.Migrations
                 {
                     b.HasOne("BestHomeServices.Infrastructure.Data.Models.Category", null)
                         .WithMany("Cities")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("BestHomeServices.Infrastructure.Data.Models.Client", b =>
