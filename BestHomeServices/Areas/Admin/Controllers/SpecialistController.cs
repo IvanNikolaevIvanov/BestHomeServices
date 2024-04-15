@@ -64,6 +64,11 @@ namespace BestHomeServices.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            if (await specialistService.IsSpecialistsAPartOfProjectAsync(id))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -78,6 +83,11 @@ namespace BestHomeServices.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteSpecialist(int id)
         {
             if (!await specialistService.SpecialistExistsAsync(id))
+            {
+                return BadRequest();
+            }
+
+            if (await specialistService.IsSpecialistsAPartOfProjectAsync(id))
             {
                 return BadRequest();
             }

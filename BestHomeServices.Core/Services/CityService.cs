@@ -20,6 +20,17 @@ namespace BestHomeServices.Core.Services
             repository = _repository;
         }
 
+        public async Task AddCityAsync(CityFormModel model)
+        {
+            var city = new City()
+            {
+                Name = model.Name
+            };
+
+            await repository.AddAsync(city);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<ICollection<CityViewModel>> GetAllCitiesAsync()
         {
             return await repository.AllReadOnly<City>()

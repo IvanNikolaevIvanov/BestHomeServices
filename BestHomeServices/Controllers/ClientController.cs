@@ -13,15 +13,18 @@ namespace BestHomeServices.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IClientService _clientService;
         private readonly ISpecialistService specialistService;
+        private readonly ICityService cityService;
 
         public ClientController(
             ILogger<HomeController> logger,
             IClientService clientService,
-            ISpecialistService _specialistService)
+            ISpecialistService _specialistService,
+            ICityService _cityService)
         {
             _logger = logger;
             _clientService = clientService;
             specialistService = _specialistService;
+            cityService = _cityService;
         }
 
         [HttpGet]
@@ -76,13 +79,16 @@ namespace BestHomeServices.Controllers
 
             var specialist = await specialistService.GetSpecialistByIdAsync(id);
 
+            var specialistCity = await cityService.GetCityByIdAsync(specialist.CityId);
+
             var model = new SpecialistViewModel()
             {
                 Id = id,
                 FirstName = specialist.FirstName,
                 LastName = specialist.LastName,
                 ImageUrl = specialist.ImageUrl,
-                PhoneNumber = specialist.PhoneNumber
+                PhoneNumber = specialist.PhoneNumber,
+                CityName = specialistCity.Name
             };
 
             return View(model);

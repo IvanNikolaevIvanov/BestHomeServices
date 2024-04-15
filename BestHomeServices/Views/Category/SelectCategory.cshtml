@@ -25,12 +25,12 @@
 </div>
 
 <div class="card-group">
-    <div class="col-md-4 mt-3 mb-3">
+    
         @foreach (var specialist in @Model.Specialists)
         {
             <partial name="_SpecialistPartial" model="@specialist" />
         }
-    </div>
+   
 </div>
 
 @section Scripts {

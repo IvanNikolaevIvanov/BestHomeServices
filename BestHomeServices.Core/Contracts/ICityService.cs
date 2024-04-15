@@ -13,5 +13,7 @@ namespace BestHomeServices.Core.Contracts
         Task<ICollection<CityViewModel>> GetAllCitiesAsync();
 
         Task<City> GetCityByIdAsync(int id);
+
+        Task AddCityAsync(CityFormModel model);
     }
 }

@@ -25,13 +25,6 @@ namespace BestHomeServices.Core.Services
 
         public async Task HireSpecialistByIdAsync(Specialist specialist, Client client)
         {
-            //var specialist = await repository.All<Specialist>()
-            //    .FirstOrDefaultAsync(s => s.Id == specialistId);
-
-            //var client = await repository.All<Client>()
-            //    .FirstOrDefaultAsync(c => c.UserId == userId);
-
-
             if (specialist != null && client != null)
             {
 
@@ -141,6 +134,14 @@ namespace BestHomeServices.Core.Services
                 .FirstAsync();
 
             return specialist;
+        }
+
+        public async Task<bool> IsSpecialistsAPartOfProjectAsync(int id)
+        {
+            var project = await repository.AllReadOnly<Project>()
+                .FirstOrDefaultAsync(p => p.SpecialistId == id);
+
+            return project != null;
         }
     }
 }

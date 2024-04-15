@@ -21,5 +21,7 @@ namespace BestHomeServices.Core.Contracts
         Task EditSpecialistAsync(int id, AddSpecialistFormModel model);
 
         Task<AddSpecialistFormModel> GetSpecialistFormByIdAsync(int id);
+
+        Task<bool> IsSpecialistsAPartOfProjectAsync(int id);
     }
 }

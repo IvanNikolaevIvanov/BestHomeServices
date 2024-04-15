@@ -135,7 +135,8 @@ namespace BestHomeServices.Core.Services
                     LastName = s.LastName,
                     Description = s.Description,
                     ImageUrl = s.ImageUrl,
-                    PhoneNumber = s.PhoneNumber
+                    PhoneNumber = s.PhoneNumber,
+                     CityName = s.City.Name
                 })
                 .ToListAsync();
 

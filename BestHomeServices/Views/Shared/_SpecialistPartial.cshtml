@@ -8,6 +8,7 @@
         <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
         <p class="card-text">@Model.Description</p>
         <p class="card-text">Phone number: @Model.PhoneNumber</p>
+        <p class="card-text">City: @Model.CityName</p>
         @if (Model.IsBusy == false)
         {
             <a asp-area="" asp-controller="Specialist" asp-action="Hire"

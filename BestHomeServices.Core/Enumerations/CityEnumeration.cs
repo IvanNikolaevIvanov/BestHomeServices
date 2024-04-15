@@ -4,8 +4,8 @@
     {
         All = 0,
         Larnaca = 1,
-        Limasol = 2,
-        Pafos = 3,
+        Pafos = 2,
+        Limasol = 3,
         Nicosia = 4
     }
 }

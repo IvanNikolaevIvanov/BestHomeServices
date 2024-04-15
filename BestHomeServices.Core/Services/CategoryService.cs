@@ -22,21 +22,48 @@ namespace BestHomeServices.Core.Services
             , string? category = null
             )
         {
-            var categoriesToShow = repository.AllReadOnly<Category>();
+            var categoriesToShow = await repository.AllReadOnly<Category>()
+                .Include(c => c.Specialists)
+                .ThenInclude(s => s.City)
+                .Select(c => new CategoryDetailsQueryServiceModel()
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImgUrl = c.ImgUrl,
+                    Specialists = c.Specialists.Select(s => new SpecialistViewModel()
+                    {
+                        Id = s.Id,
+                        FirstName = s.FirstName,
+                        LastName = s.LastName,
+                        Description = s.Description,
+                        ImageUrl = s.ImageUrl,
+                        IsBusy = s.IsBusy,
+                        PhoneNumber = s.PhoneNumber,
+                        CityId = s.CityId,
+                        CityName = s.City.Name
+
+                    })
+                })
+                .ToListAsync();
 
             if (category != null && category != "All")
             {
                 categoriesToShow = categoriesToShow
-                    .Where(c => c.Title == category);
+                    .Where(c => c.Title == category)
+                    .ToList();
             }
 
             if (cityEnumeration != CityEnumeration.All)
             {
                 categoriesToShow = categoriesToShow
-                    .Where(c => c.Cities.Any(c => c.Name == cityEnumeration.ToString()));
+                    .Where(c => c.Specialists
+                                   .Any(s => s.CityName == cityEnumeration.ToString()))
+                    .ToList();
+
             }
 
-            var categories = await categoriesToShow
+            var categoriesToReturn = categoriesToShow
                 .Select(c => new CategoryViewModel()
                 {
                     Id = c.Id,
@@ -44,9 +71,9 @@ namespace BestHomeServices.Core.Services
                     Description = c.Description,
                     ImgUrl = c.ImgUrl
                 })
-                .ToListAsync();
+                .ToList();
 
-            return categories;
+            return categoriesToReturn;
         }
 
         public async Task<bool> ExistsAsync(int id)
@@ -59,6 +86,7 @@ namespace BestHomeServices.Core.Services
         public async Task<CategoryDetailsViewModel> CategoryDetailsByIdAsync(int id)
         {
             var categorySpecialists = await repository.AllReadOnly<Specialist>()
+                .Include(s => s.City)
                 .Where(s => s.CategoryId == id)
                 .Where(s => s.IsBusy == false)
                 .ToListAsync();
@@ -75,36 +103,12 @@ namespace BestHomeServices.Core.Services
                    LastName = s.LastName,
                    Description = s.Description,
                    ImageUrl = s.ImageUrl,
-                   PhoneNumber = s.PhoneNumber
+                   PhoneNumber = s.PhoneNumber,
+                   CityId = s.CityId,
+                   CityName = s.City.Name
                })
                .ToList();
             }
-
-            //var cities = await repository.AllReadOnly<City>()
-            //    .ToListAsync();
-
-            //var citiesToAdd = new List<CityViewModel>();
-
-            //foreach (var specialist in categorySpecialists)
-            //{
-            //    var cityId = specialist.CityId;
-
-            //    if (!categoryCities.Contains(specialist.City))
-            //    {
-            //        categoryCities.Add(specialist.City);
-            //    }
-            //}  
-
-            //if (categoryCities.Any(c => c != null))
-            //{
-            //     citiesToAdd = categoryCities
-            //    .Select(c => new CityViewModel()
-            //    {
-            //        Id = c.Id,
-            //        Name = c.Name
-            //    })
-            //    .ToList();
-            //}
 
 
             var category = await repository.AllReadOnly<Category>()
@@ -114,7 +118,6 @@ namespace BestHomeServices.Core.Services
                     Title = c.Title,
                     Description = c.Description,
                     ImgUrl = c.ImgUrl,
-                    //Client = new Models.Client.ClientsServiceModel()
 
                 })
                 .FirstAsync();
