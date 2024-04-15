@@ -19,6 +19,13 @@
 
         public const int SpecialistImageUrlMaxLength = 2000;
 
+        public const string SpecialistCategoryIdMinimum = "0";
+        public const string SpecialistCategoryIdMaximum = "10000";
+
+        public const string SpecialistCityIdMinimum = "0";
+        public const string SpecialistCityIdMaximum = "10000";
+
+
         // Category entity data constants
 
         public const int CategoryTitleMaxLength = 50;

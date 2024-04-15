@@ -52,10 +52,9 @@ namespace BestHomeServices.Core.Services
 
         }
 
-        public async Task<Specialist> GetSpecialistByIdAsync(int id)
+        public async Task<Specialist?> GetSpecialistByIdAsync(int id)
         {
-            return await repository.All<Specialist>()
-                .FirstAsync(s => s.Id == id);
+            return await repository.GetByIdAsync<Specialist>(id);  
         }
 
         public async Task<IEnumerable<SpecialistDetailsViewModel>> GetAllSpecialistsAsync()
@@ -82,6 +81,66 @@ namespace BestHomeServices.Core.Services
                 .ToListAsync();
 
             return specialists;
+        }
+
+        public async Task AddSpecialistAsync(AddSpecialistFormModel model)
+        {
+            Specialist specialistToAdd = new Specialist()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                CategoryId = model.CategoryId,
+                CityId = model.CityId,
+                PhoneNumber = model.PhoneNumber
+            };
+
+            await repository.AddAsync(specialistToAdd);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteSpecialistAsync(int id)
+        {
+            await repository.DeleteAsync<Specialist>(id);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task EditSpecialistAsync(int id, AddSpecialistFormModel model)
+        {
+            var specialistToEdit = await GetSpecialistByIdAsync(id);
+
+            if (specialistToEdit != null)
+            {
+                specialistToEdit.FirstName = model.FirstName;
+                specialistToEdit.LastName = model.LastName;
+                specialistToEdit.PhoneNumber = model.PhoneNumber;
+                specialistToEdit.Description = model.Description;
+                specialistToEdit.CategoryId = model.CategoryId;
+                specialistToEdit.CityId = model.CityId;
+                specialistToEdit.ImageUrl = model.ImageUrl;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<AddSpecialistFormModel> GetSpecialistFormByIdAsync(int id)
+        {
+            var specialist = await repository.AllReadOnly<Specialist>()
+                .Where(s => s.Id == id)
+                .Select(s => new AddSpecialistFormModel()
+                {
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    CategoryId = s.CategoryId,
+                    CityId = s.CityId,
+                    Description = s.Description,
+                    ImageUrl = s.ImageUrl,
+                    PhoneNumber = s.PhoneNumber
+                })
+                .FirstAsync();
+
+            return specialist;
         }
     }
 }

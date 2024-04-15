@@ -59,11 +59,5 @@ namespace BestHomeServices.Infrastructure.Data.Models
         [Comment("A boolean stating if the specialist is available to be hired")]
         public bool IsBusy { get; set; } = false;
 
-        //[Required]
-        //[Comment("User's identifier")]
-        //public string UserId { get; set; } = string.Empty;
-
-        //[ForeignKey(nameof(UserId))]
-        //public IdentityUser User { get; set; } = null!;
     }
 }
