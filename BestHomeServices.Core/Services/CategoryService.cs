@@ -78,7 +78,6 @@ namespace BestHomeServices.Core.Services
 
         public async Task<bool> ExistsAsync(int id)
         {
-
             return await repository.AllReadOnly<Category>()
                 .AnyAsync(c => c.Id == id);
         }

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestHomeServices.Core", "Be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestHomeServices.Infrastructure", "BestHomeServices.Infrastructure\BestHomeServices.Infrastructure.csproj", "{26FE23BB-782C-4A89-8E6B-2C19780431F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestHomeService.Tests", "BestHomeService.Tests\BestHomeService.Tests.csproj", "{0D6907EA-CEA3-4F99-816E-8092616E0FCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestHomeServices.UnitTests", "BestHomeService.Tests\BestHomeServices.UnitTests.csproj", "{0D6907EA-CEA3-4F99-816E-8092616E0FCC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{26FE23BB-782C-4A89-8E6B-2C19780431F6} = {26FE23BB-782C-4A89-8E6B-2C19780431F6}
 		{40C6FD4F-931E-4DFB-9789-9CA8D4D377BE} = {40C6FD4F-931E-4DFB-9789-9CA8D4D377BE}

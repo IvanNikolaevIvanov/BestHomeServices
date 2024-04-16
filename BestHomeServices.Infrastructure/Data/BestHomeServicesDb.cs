@@ -2,14 +2,17 @@
 using BestHomeServices.Infrastructure.Data.SeedDb;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BestHomeServices.Infrastructure.Data;
 
 public class BestHomeServicesDb : IdentityDbContext
 {
+
     public BestHomeServicesDb(DbContextOptions<BestHomeServicesDb> options)
         : base(options)
     {
+       
     }
 
     public DbSet<Category> Categories { get; set; } = null!;
