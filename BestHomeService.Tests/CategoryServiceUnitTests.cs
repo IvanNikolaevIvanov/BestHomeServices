@@ -1,198 +1,21 @@
 ﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Core.Enumerations;
+using BestHomeServices.Core.Models.Category;
 using BestHomeServices.Core.Services;
-using BestHomeServices.Infrastructure.Data.Common;
-using BestHomeServices.Infrastructure.Data.Models;
-using BestHomeServices.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using NUnit.Framework.Internal;
 
 namespace BestHomeServices.UnitTests
 {
     [TestFixture]
-    public class CategoryServiceUnitTests
+    public class CategoryServiceUnitTests : UnitTestsBase
     {
-
-        protected BestHomeServicesDb _data;
-        protected IRepository repository;
-
         protected ICategoryService categoryService;
-        protected IEnumerable<Category> categories;
-        protected IEnumerable<Specialist> specialists;
-        protected IEnumerable<City> cities;
-        public Category ElectricianCategory;
-        public Category PlumberCategory;
-        public Category HandymanCategory;
-
-        public City LarnacaCity;
-        public City PafosCity;
-        public City LimasolCity;
-
-        public Specialist FirstSpecialist;
-        public Specialist SecondSpecialist;
-        public Specialist ThirdSpecialist;
-
-        public Client FirstClient;
-        public Project FirstProject;
-
-
+       
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            // categories
-
-            ElectricianCategory = new Category()
-            {
-                Id = 1,
-                Title = "Electrician",
-                Description = "Hire one of the most experienced electricians in your area.",
-                ImgUrl = "images/electrical.png",
-
-            };
-
-            PlumberCategory = new Category()
-            {
-                Id = 2,
-                Title = "Plumber",
-                Description = "Hire one of the most experienced plumbers in your area.",
-                ImgUrl = "images/plumber.png"
-            };
-
-            HandymanCategory = new Category()
-            {
-                Id = 3,
-                Title = "Handyman",
-                Description = "Hire one of the most experienced handymen in your area.",
-                ImgUrl = "images/handyman.png"
-            };
-
-            //cities
-
-            LarnacaCity = new City()
-            {
-                Id = 1,
-                Name = "Larnaca"
-
-            };
-
-            PafosCity = new City()
-            {
-                Id = 2,
-                Name = "Pafos"
-
-            };
-
-            LimasolCity = new City()
-            {
-                Id = 3,
-                Name = "Limasol"
-
-            };
-
-            // specialists
-
-            FirstSpecialist = new Specialist()
-            {
-                Id = 1,
-                CategoryId = ElectricianCategory.Id,
-                FirstName = "Ivan",
-                LastName = "Ivanov",
-                Description = "This is one of the best electricians in the area.",
-                PhoneNumber = "0012233556",
-                CityId = 1,
-                ImageUrl = "https://media.istockphoto.com/id/516005348/photo/african-electrical-worker-using-laptop-computer.jpg?s=1024x1024&w=is&k=20&c=2wnW5I1-CWTKWB2GYpmgZ5X3oA2Etvq0e_1Tn3y9T6w=",
-
-            };
-
-            SecondSpecialist = new Specialist()
-            {
-                Id = 2,
-                CategoryId = PlumberCategory.Id,
-                FirstName = "Pesho",
-                LastName = "Peshev",
-                Description = "This is one of the best plumbers in the area.",
-                PhoneNumber = "0012233559",
-                CityId = 1,
-                ImageUrl = "https://degraceplumbing.com/wp-content/uploads/2016/02/NJ-plumber-300x200.jpg",
-
-            };
-
-            ThirdSpecialist = new Specialist()
-            {
-                Id = 3,
-                CategoryId = HandymanCategory.Id,
-                FirstName = "Stefka",
-                LastName = "Zlateva",
-                Description = "This is one of the best handymen in the area.",
-                PhoneNumber = "0012233552",
-                CityId = 2,
-                ImageUrl = "https://image1.masterfile.com/getImage/NjAwLTA2NjcxNzUwZW4uMDAwMDAwMDA=AKvV1Y/600-06671750en_Masterfile.jpg",
-
-            };
-
-            FirstClient = new Client()
-            {
-                Id = 1,
-                Name = "Pesho Petrov",
-                Address = "16 Pythagorou str",
-                CityId = 1,
-                PhoneNumber = "0035799344556",
-                UserId = "6d5800ced7264fc83d9d6b3ac1f591e"
-            };
-
-            FirstProject = new Project()
-            {
-                ClientId = 1,
-                SpecialistId = 1,
-            };
-
-            specialists = new List<Specialist>()
-            {
-                 FirstSpecialist, SecondSpecialist, ThirdSpecialist
-            };
-
-            cities = new List<City>()
-            {
-                LarnacaCity, PafosCity, LimasolCity
-            };
-
-            categories = new List<Category>()
-            {
-                ElectricianCategory, PlumberCategory, HandymanCategory
-            };
-
-            // Database
-
-            var options = new DbContextOptionsBuilder<BestHomeServicesDb>()
-                .UseInMemoryDatabase(databaseName: "BestHomeServicesDb" + Guid.NewGuid().ToString())
-                .Options;
-
-            _data = new BestHomeServicesDb(options);
-           
-
-            _data.Categories.AddRangeAsync(categories);
-            _data.Specialists.AddRangeAsync(specialists);
-            _data.Cities.AddRangeAsync(cities);
-            _data.AddAsync(FirstClient);
-            _data.AddAsync(FirstProject);
-            _data.SaveChanges();
-
-
-            repository = new Repository(_data);
-
             categoryService = new CategoryService(repository);
         }
-
-        [TearDown]
-        public async Task Teardown()
-        {
-            await this._data.Database.EnsureDeletedAsync();
-            await this._data.DisposeAsync();
-        }
-
 
         [Test]
         public async Task ExistsAsyncShouldReturnTrue()
@@ -206,15 +29,149 @@ namespace BestHomeServices.UnitTests
             var resultTwo = await categoryService.ExistsAsync(nonExistingCategoryId);
 
             // Assert
-            Assert.AreEqual(true, resultOne);
-            Assert.AreEqual(false, resultTwo);
+            Assert.That(resultOne, Is.EqualTo(true));
+            Assert.That(resultTwo, Is.EqualTo(false));
         }
 
 
         [Test]
-        public async Task AllCategoriesAsyncShouldReturnAllCategories()
+        public async Task AllCategoriesAsyncShouldReturnAllCategoriesIfNoFiltering()
         {
+            // Act
+            var categories = await categoryService.AllCategoriesAsync();
+
+
+            // Assert
+            Assert.IsNotNull(categories);
+            Assert.That(categories.Count(), Is.EqualTo(3));
 
         }
-    }
+
+        [Test]
+        public async Task AllCategoriesAsyncShouldReturnAllCategoriesIfOnlyCategoryName()
+        {
+            // Act
+            var categories = await categoryService.AllCategoriesAsync(0, "Electrician");
+
+
+            // Assert
+            Assert.IsNotNull(categories);
+            Assert.That(categories.Count(), Is.EqualTo(1));
+
+        }
+
+        [Test]
+        public async Task AllCategoriesAsyncShouldReturnAllCategoriesIfOnlyCityName()
+        {
+            // Act
+            var categories = await categoryService.AllCategoriesAsync(CityEnumeration.Larnaca, null);
+
+
+            // Assert
+            Assert.IsNotNull(categories);
+            Assert.That(categories.Count(), Is.EqualTo(2));
+
+        }
+
+        [Test]
+        public async Task CategoryDetailsByIdAsyncShouldReturnByExistingCategoryId()
+        {
+            //Act
+            var category = await categoryService.CategoryDetailsByIdAsync(1);
+
+            //Assert
+            Assert.IsNotNull(categories);
+            Assert.That(category.Specialists.Count(), Is.EqualTo(1));
+            
+        }
+
+        [Test]
+        public async Task AddCategoryAsyncShouldAddANewCategory()
+        {
+            //Arrange
+            CategoryFormModel newCategory = new CategoryFormModel()
+            {
+                Title = "Test",
+                Description = "Test",
+                ImgUrl = "test"
+                 
+            };
+
+            // Act
+            await categoryService.AddCategoryAsync(newCategory);
+
+            var categories = await categoryService.AllCategoriesAsync();
+
+            // Assert
+            
+            Assert.That(categories.Count(), Is.EqualTo(4));
+
+        }
+
+        [Test]
+        public async Task DeleteCategoryAsyncShouldDeleteExistingCategoryWithNoSpecialistRelations()
+        {
+            // Arrange
+            CategoryFormModel newCategory = new CategoryFormModel()
+            {
+                Title = "Test",
+                Description = "Test",
+                ImgUrl = "test"
+
+            };
+            await categoryService.AddCategoryAsync(newCategory);
+
+            var categoriesBeforeDelete = await categoryService.AllCategoriesAsync();
+
+            // Act
+
+            await categoryService.DeleteCategoryAsync(4);
+
+            var categoriesAfterDelete = await categoryService.AllCategoriesAsync();
+
+            // Assert
+
+            Assert.That(categoriesBeforeDelete.Count(), Is.EqualTo(categoriesAfterDelete.Count() + 1));
+        }
+
+
+        [Test]
+        public async Task EditAsyncShouldEditAnExistingAnCategoryWithAccurateData()
+        {
+            // Arrange
+            CategoryDetailsViewModel model = new CategoryDetailsViewModel()
+            {
+                Title = "Test"
+            };
+
+            // Act
+
+            await categoryService.EditAsync(1, model);
+            var categories = await categoryService.AllCategoriesAsync(0, "Test");
+            var category = categories.First();
+
+            // Assert
+
+            Assert.That(model.Title, Is.EqualTo(category.Title));
+        }
+
+        [Test]
+        public async Task GetCategoryFormByIdAsyncReturnsModelOfExistingCategory()
+        {
+            // Arrange
+            CategoryFormModel model = new CategoryFormModel()
+            {
+                Title = "Electrician"
+            };
+
+            // Act
+
+            var returnedModel = await categoryService.GetCategoryFormByIdAsync(1);
+
+            // Assert
+
+            Assert.That(returnedModel.Title, Is.EqualTo(model.Title));
+        }
+
+    } 
 }

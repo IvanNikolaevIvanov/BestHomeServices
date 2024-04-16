@@ -1,13 +1,8 @@
-﻿using BestHomeServices.Infrastructure.Data;
+﻿using BestHomeServices.Core.Contracts;
+using BestHomeServices.Infrastructure.Data;
 using BestHomeServices.Infrastructure.Data.Common;
 using BestHomeServices.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BestHomeServices.UnitTests
 {
@@ -16,21 +11,10 @@ namespace BestHomeServices.UnitTests
         protected BestHomeServicesDb _data;
         protected IRepository repository;
 
+        protected ICategoryService categoryService;
         protected IEnumerable<Category> categories;
         protected IEnumerable<Specialist> specialists;
         protected IEnumerable<City> cities;
-
-        [OneTimeSetUp]
-        public void SetUpBase()
-        {
-            var options = new DbContextOptionsBuilder<BestHomeServicesDb>()
-                .UseInMemoryDatabase(databaseName: "BestHomeServicesDb" + Guid.NewGuid().ToString())
-                .Options;
-
-            _data = new BestHomeServicesDb(options);
-            repository = new Repository(_data);
-        }
-
         public Category ElectricianCategory;
         public Category PlumberCategory;
         public Category HandymanCategory;
@@ -46,7 +30,9 @@ namespace BestHomeServices.UnitTests
         public Client FirstClient;
         public Project FirstProject;
 
-        private void SeedDatabase()
+
+        [SetUp]
+        public void Setup()
         {
             // categories
 
@@ -170,6 +156,15 @@ namespace BestHomeServices.UnitTests
                 ElectricianCategory, PlumberCategory, HandymanCategory
             };
 
+            // Database
+
+            var options = new DbContextOptionsBuilder<BestHomeServicesDb>()
+                .UseInMemoryDatabase(databaseName: "BestHomeServicesDb" + Guid.NewGuid().ToString())
+                .Options;
+
+            _data = new BestHomeServicesDb(options);
+
+
             _data.Categories.AddRangeAsync(categories);
             _data.Specialists.AddRangeAsync(specialists);
             _data.Cities.AddRangeAsync(cities);
@@ -177,13 +172,14 @@ namespace BestHomeServices.UnitTests
             _data.AddAsync(FirstProject);
             _data.SaveChanges();
 
-
             repository = new Repository(_data);
         }
 
-        [OneTimeTearDown]
-        public void TearDownBase()
-            => _data.Dispose();
-
+        [TearDown]
+        public async Task Teardown()
+        {
+            await this._data.Database.EnsureDeletedAsync();
+            await this._data.DisposeAsync();
+        }
     }
 }

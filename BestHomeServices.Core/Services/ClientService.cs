@@ -12,14 +12,11 @@ namespace BestHomeServices.Core.Services
     public class ClientService : IClientService
     {
         private readonly IRepository repository;
-        private readonly ICityService cityService;
 
-        public ClientService(
-            IRepository _repository,
-            ICityService _cityService)
+
+        public ClientService(IRepository _repository)
         {
             repository = _repository;
-            cityService = _cityService;
         }
 
         public async Task AddClientAsync(string userId, string name, string address, string city, string phoneNumber)
@@ -63,7 +60,7 @@ namespace BestHomeServices.Core.Services
             client.Address = model.ClientAddress;
             client.CityId = clientCity.Id;
             client.PhoneNumber = model.ClientPhoneNumber;
-            
+
             await repository.SaveChangesAsync();
         }
 
@@ -136,7 +133,7 @@ namespace BestHomeServices.Core.Services
                     Description = s.Description,
                     ImageUrl = s.ImageUrl,
                     PhoneNumber = s.PhoneNumber,
-                     CityName = s.City.Name
+                    CityName = s.City.Name
                 })
                 .ToListAsync();
 
@@ -147,14 +144,14 @@ namespace BestHomeServices.Core.Services
 
         public async Task RemoveSpecialistFromClient(string userId, int specialistId)
         {
-            var client = await repository.All<Client>()
+            var client = await repository.AllReadOnly<Client>()
                .FirstAsync(c => c.UserId == userId);
 
             var projectToDelete = await repository.AllReadOnly<Project>()
                 .FirstOrDefaultAsync(p => p.ClientId == client.Id && p.SpecialistId == specialistId);
 
             if (projectToDelete != null)
-            {
+            { 
                 await repository.DeleteAsync<Project>(projectToDelete);
             }
 
