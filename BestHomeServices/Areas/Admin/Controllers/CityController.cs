@@ -14,9 +14,14 @@ namespace BestHomeServices.Areas.Admin.Controllers
             cityService = _cityService;
         }
 
-        public async Task<IActionResult> AllCities()
+        public async Task<IActionResult> AllCities([FromQuery] AllCitiesQueryModel model)
         {
-            var model = await cityService.GetAllCitiesAsync();
+            var queryResult = await cityService.GetAllCitiesAsync(
+                model.currentPage,
+                model.citiesPerPage);
+
+            model.totalCitiesCount = queryResult.totalCitiesCount;
+            model.Cities = queryResult.Cities;
 
             return View(model);
         }

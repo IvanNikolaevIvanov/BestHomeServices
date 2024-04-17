@@ -1,6 +1,6 @@
-﻿@model IEnumerable<CityViewModel>
+﻿@model AllCitiesQueryModel
 @{
-    ViewBag.Title = "All Users";
+    ViewBag.Title = "All Cities";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -16,11 +16,11 @@
         <tr>
             <th><label>Id</label></th>
             <th><label>City</label></th>
-            
+
         </tr>
     </thead>
     <tbody>
-        @foreach (var city in Model)
+        @foreach (var city in Model.Cities)
         {
             <tr>
                 <td>
@@ -34,3 +34,39 @@
 
     </tbody>
 </table>
+
+@{
+    var entriesPerPage = Model.citiesPerPage;
+    var totalEntries = Model.totalCitiesCount;
+    var currentPage = Model.currentPage;
+    var previousPage = currentPage - 1;
+    if (previousPage < 1)
+    { previousPage = 1; }
+
+    var maxPage = Math.Ceiling((double)totalEntries / entriesPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(currentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="City" 
+           asp-action="AllCities"
+           asp-route-currentPage="@previousPage">
+            <<
+        </a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = currentPage == maxPage || !Model.Cities.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        @{
+            currentPage = currentPage + 1;
+        }
+        <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="City" 
+           asp-action="AllCities"
+           asp-route-currentPage="@(Model.currentPage + 1)">>></a>
+    </div>
+</div>

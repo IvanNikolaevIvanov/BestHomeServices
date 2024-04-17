@@ -10,7 +10,8 @@ namespace BestHomeServices.Core.Contracts
 {
     public interface ICityService
     {
-        Task<ICollection<CityViewModel>> GetAllCitiesAsync();
+               
+        Task<CityQueryServiceModel> GetAllCitiesAsync(int currentPage, int citiesPerPage);
 
         Task<City> GetCityByIdAsync(int id);
 

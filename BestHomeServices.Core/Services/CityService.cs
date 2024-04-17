@@ -31,15 +31,28 @@ namespace BestHomeServices.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<ICollection<CityViewModel>> GetAllCitiesAsync()
+        public async Task<CityQueryServiceModel> GetAllCitiesAsync(int currentPage, int citiesPerPage)
         {
-            return await repository.AllReadOnly<City>()
+            var cities = repository.AllReadOnly<City>();
+
+            var citiesToShow = await cities
+                .Skip((currentPage - 1) * citiesPerPage)
+                .Take(citiesPerPage)
                 .Select(c => new CityViewModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
                 })
                 .ToListAsync();
+
+            int totalCitiesCount = await cities.CountAsync();
+
+            return new CityQueryServiceModel()
+            {
+                Cities = citiesToShow,
+                totalCitiesCount = totalCitiesCount
+            };
+
         }
 
         public async Task<City> GetCityByIdAsync(int id)

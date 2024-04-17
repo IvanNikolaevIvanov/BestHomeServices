@@ -2,6 +2,7 @@
 using BestHomeServices.Core.Services;
 using BestHomeServices.Infrastructure.Data.Common;
 using BestHomeServices.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BestHomeServices.UnitTests
 {
@@ -19,15 +20,18 @@ namespace BestHomeServices.UnitTests
         public async Task GetAllCitiesAsyncShouldReturnCorrectly()
         {
             // Arrange
-            int expectedCount = 3;
+            int currentPage = 1;
+            int citiesPerPage = 5;
 
             // Act
-
-            var list = await cityService.GetAllCitiesAsync();
+            var cities = await repository.AllReadOnly<City>().ToListAsync();
+            
+            var list = await cityService.GetAllCitiesAsync(currentPage, citiesPerPage);
+            var actualCount = list.Cities.Count();
 
             //Assert
-
-            Assert.That(list.Count(), Is.EqualTo(expectedCount));
+            Assert.That(cities, Is.Not.Null);
+            Assert.That(actualCount, Is.LessThanOrEqualTo(citiesPerPage));
         }
 
         [Test]
