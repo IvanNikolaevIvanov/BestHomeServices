@@ -13,4 +13,5 @@ be able to hire him/her.
 Technology:
 ASP.NET Core 6.0, Entity Framework Core 6.0.27
 
-https://img.shields.io/badge/:badgeContent
+![Static Badge](https://img.shields.io/badge/ASP.NET%20CORE)
+
