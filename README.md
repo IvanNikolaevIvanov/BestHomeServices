@@ -10,8 +10,8 @@ On the Home page there is a option to filter specialists by category and city. O
 be able to hire him/her.
  There is also an administator user account portal where after Login the authorized administrator will be redirected to. The administrator can Add, Edit and Delete Categories, Specialists and Cities. 
 
-Technology:
-ASP.NET Core 6.0, Entity Framework Core 6.0.27
+Technologies:
+ASP.NET Core 6.0, Entity Framework Core 6.0.27, JS, HTML5, CSS, MSSQL
 
-![Static Badge](https://img.shields.io/badge/ASP.NET%20CORE)
+
 
